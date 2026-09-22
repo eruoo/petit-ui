@@ -1,0 +1,7 @@
+packages:
+  - packages/*
+
+allowBuilds:
+  '@parcel/watcher': true
+  # 由根包的 prepare 安装 hooks，避免依赖的 postinstall 重复执行。
+  simple-git-hooks: false

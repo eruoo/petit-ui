@@ -1,0 +1,10 @@
+@import 'tailwindcss' source(none);
+@source inline('bg-petit-fixture');
+
+:root {
+  --petit-fixture-color: #123456;
+}
+
+@theme inline {
+  --color-petit-fixture: var(--petit-fixture-color);
+}
