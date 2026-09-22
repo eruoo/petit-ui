@@ -1,0 +1,31 @@
+{
+  "name": "petit-ui-monorepo",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "pnpm lint && pnpm format:check && pnpm test",
+    "lint": "oxlint --deny-warnings .",
+    "lint:fix": "oxlint --deny-warnings --fix .",
+    "format": "oxfmt .",
+    "format:check": "oxfmt --check .",
+    "test": "pnpm --filter petit-ui test",
+    "prepare": "simple-git-hooks",
+    "changelog": "git-cliff --config cliff.toml --offline",
+    "release:bump": "pnpm check && bumpp"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "21.2.3",
+    "@commitlint/config-conventional": "21.2.3",
+    "bumpp": "12.3.0",
+    "git-cliff": "2.14.2",
+    "oxfmt": "0.70.0",
+    "oxlint": "1.85.0",
+    "simple-git-hooks": "2.14.0"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm check",
+    "commit-msg": "pnpm exec commitlint --edit \"$1\"",
+    "preserveUnused": true
+  },
+  "packageManager": "pnpm@11.25.0"
+}
