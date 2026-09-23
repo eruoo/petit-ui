@@ -8,15 +8,15 @@
 
 首次安装执行 `pnpm install`；CI 使用 `pnpm install --frozen-lockfile`。
 
-| 命令                | 用途                                             |
-| ------------------- | ------------------------------------------------ |
-| `pnpm check`        | 依次执行代码检查、格式检查和子包测试。           |
-| `pnpm lint`         | 使用 Oxlint 检查 JS/TS，错误和警告均使检查失败。 |
-| `pnpm lint:fix`     | 修复 Oxlint 可自动修复的问题。                   |
-| `pnpm format`       | 使用 Oxfmt 格式化代码、CSS、配置和文档。         |
-| `pnpm format:check` | 只检查格式，不修改文件。                         |
-| `pnpm test`         | 运行 `petit-ui` 子包的 Node.js 测试。            |
-| `pnpm prepare`      | 安装或更新 Git hooks。                           |
+| 命令                | 用途                                                     |
+| ------------------- | -------------------------------------------------------- |
+| `pnpm check`        | 依次执行代码、格式、token 测试、站点类型检查和静态构建。 |
+| `pnpm lint`         | 使用 Oxlint 检查 JS/TS，错误和警告均使检查失败。         |
+| `pnpm lint:fix`     | 修复 Oxlint 可自动修复的问题。                           |
+| `pnpm format`       | 使用 Oxfmt 格式化代码、CSS、配置和文档。                 |
+| `pnpm format:check` | 只检查格式，不修改文件。                                 |
+| `pnpm test`         | 运行 `petit-ui` 子包的 Node.js 测试。                    |
+| `pnpm prepare`      | 安装或更新 Git hooks。                                   |
 
 Oxlint 使用根目录 `.oxlintrc.json`，启用 correctness 检查和 Node.js 环境。Oxfmt 使用 `.oxfmtrc.json`，JS/TS 使用单引号、不写分号，其他格式采用工具默认值。锁文件由 pnpm 维护，不交给 Oxfmt 格式化。两者均遵循 `.gitignore`。
 
@@ -55,3 +55,20 @@ PostCSS 在这里作为校验解析器使用，无需另建 `postcss.config`，�
 用隔离页面对比两种消费方式的按钮、输入框、卡片与状态文字；检查根主题、嵌套主题、未知属性值、品牌和行内覆盖、颜色重置与圆角继承、透明度，以及真实指针和键盘状态。保留明暗截图或检查记录，并记录实际浏览器版本。另按[三个控件配方](recipes/s03-controls.md)做 S03 原图局部与实现的同尺寸同文案对照，确认实际字体加载，检查比例、厚框、徽章连接、纹样与层级，分别报告功能验收与视觉验收。该流程是发布前的消费验收，不在 `pnpm check` 内启动浏览器或生成 tarball。
 
 项目采用直接发布 CSS 源码的方式，不生成 `dist`。一次性浏览器样例、打包产物和消费检查放在系统临时目录，保留可核对的检查记录；最终所需的独立示例素材、来源和实现截图集中保存在 [S03 资源](assets/s03/README.md)，不依赖临时目录，也不进入发布白名单。版本更新和 changelog 生成方式见[版本与更新日志](release.md)。
+
+## 文档站开发与验证
+
+`site/` 是私有 pnpm 子包，使用 VitePress 1.6.4、Vite 5、Vue 3.5 和 Tailwind 4；确切版本以 `site/package.json` 与锁文件为准。VitePress 自带 Vue 插件，不另行配置第二份。依赖安装需要 esbuild 和 vue-demi 的初始化脚本，许可在 workspace 的 `allowBuilds` 中显式声明。
+
+- `pnpm site:dev`：启动本地 VitePress 开发服务器。
+- `pnpm site:check`：用 vue-tsc 检查站点 Vue/TypeScript。
+- `pnpm site:build`：构建完整站点，验证 Markdown、代码引入和内部链接。
+- `pnpm site:preview`：预览 `site/.vitepress/dist/` 的静态产物。
+
+站点产物与缓存已忽略。本站未配置部署；npm 当前占名版本不含 CSS 功能，因此用户安装指南提供源码打包路径。未发布前不要改写成直接从 registry 安装即可使用。
+
+Token 浏览器的数据加载器通过包公开导出定位 CSS，读取规范的用途描述；新增或修改 token 后两者必须保持一致。字体自托管于站点，原始校验值在 `docs/assets/s03/sources.json`，许可证与字体一起保留。代码块直接引用运行中的组件，修改示例后无需维护另一份源码展示。
+
+浏览器验收按实际变更覆盖桌面/窄屏布局、导航和本地搜索、全站浅深色、嵌套主题、Tabs 方向键、Dialog 打开/Escape/焦点返回与焦点圈定、Checkbox 标签/空格，以及 Portal 的局部主题和品牌覆盖。检查控制台无 hydration 警告；截图前等待字体加载。一次性验收脚本与截图留在系统临时目录，不为此增加长期浏览器测试框架。
+
+修改模态或搜索交互时，验证 Dialog 打开期间 `⌘K`、`Ctrl+K` 和 `/` 不会同时启动全站搜索，关闭后这些快捷键仍可用。修改可复制示例的主题样式时，在只导入 tokens、没有文档站外壳样式的消费页面中检查浅色页面内的局部暗色区域，确保背景和文字都消费局部 token。

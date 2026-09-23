@@ -1,0 +1,105 @@
+@layer theme, base, components, utilities;
+@import 'tailwindcss/theme.css' layer(theme);
+/* VitePress base rules are unlayered; utilities must share that cascade level. */
+@import 'tailwindcss/utilities.css' source(none);
+@import 'petit-ui/tailwind.css';
+@source './components/TailwindDemo.vue';
+
+@font-face {
+  font-family: Nunito;
+  src: url('./assets/nunito.ttf') format('truetype');
+  font-weight: 200 1000;
+  font-display: swap;
+}
+
+:root,
+:root.dark {
+  --vp-font-family-base:
+    Nunito, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei',
+    sans-serif;
+  --vp-c-bg: var(--petit-color-background);
+  --vp-c-bg-alt: var(--petit-color-surface);
+  --vp-c-bg-elv: var(--petit-color-surface);
+  --vp-c-bg-soft: var(--petit-color-surface-hover);
+  --vp-c-text-1: var(--petit-color-foreground);
+  --vp-c-text-2: var(--petit-color-foreground-muted);
+  --vp-c-text-3: var(--petit-color-foreground-muted);
+  --vp-c-brand-1: var(--petit-color-link);
+  --vp-c-brand-2: var(--petit-color-foreground-heading);
+  --vp-c-brand-3: var(--petit-color-link);
+  --vp-c-brand-soft: var(--petit-color-surface-hover);
+  --vp-c-divider: color-mix(in srgb, var(--petit-color-border-strong) 22%, transparent);
+  --vp-c-gutter: var(--vp-c-divider);
+  --vp-c-border: var(--petit-color-border-strong);
+  --vp-code-bg: var(--petit-color-surface-hover);
+  --vp-code-block-bg: var(--petit-color-surface-hover);
+  --vp-code-color: var(--petit-color-foreground-heading);
+  --vp-button-brand-bg: var(--petit-color-primary);
+  --vp-button-brand-text: var(--petit-color-on-primary);
+  --vp-button-brand-hover-bg: var(--petit-color-primary-hover);
+  --vp-button-brand-hover-text: var(--petit-color-on-primary);
+  --vp-button-brand-active-bg: var(--petit-color-primary-active);
+  --vp-button-brand-active-text: var(--petit-color-on-primary);
+  --vp-input-border-color: var(--petit-color-border-strong);
+  --vp-local-search-bg: var(--petit-color-background);
+  --vp-local-search-result-bg: var(--petit-color-surface);
+  --vp-local-search-highlight-bg: var(--petit-color-primary);
+  --vp-local-search-highlight-text: var(--petit-color-on-primary);
+}
+
+:where(:root, [data-theme='light']) {
+  --recipe-dark-mix: 0%;
+  color-scheme: light;
+}
+:where([data-theme='dark']) {
+  --recipe-dark-mix: 100%;
+  color-scheme: dark;
+}
+.VPNavBarTitle .title {
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: -1px;
+}
+.vp-doc h1,
+.vp-doc h2,
+.vp-doc h3 {
+  color: var(--petit-color-foreground-heading);
+}
+.vp-doc h1 {
+  font-weight: 800;
+}
+.vp-doc a {
+  text-underline-offset: 4px;
+}
+.vp-doc :where(button, input, select):focus-visible,
+.petit-demo :where(button, a, input, select):focus-visible,
+.petit-dialog :focus-visible {
+  outline: 3px solid var(--petit-color-focus);
+  outline-offset: 4px;
+}
+.petit-demo {
+  font-synthesis: none;
+  color: var(--petit-color-foreground);
+}
+.petit-demo button {
+  cursor: pointer;
+}
+.petit-demo button:disabled {
+  cursor: not-allowed;
+}
+.demo-brand {
+  --petit-color-primary: #654d79;
+  --petit-color-primary-hover: #553d69;
+  --petit-color-primary-active: #463058;
+  --petit-color-on-primary: #ffffff;
+  --petit-color-focus: #78538f;
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation: none !important;
+    transition: none !important;
+  }
+}

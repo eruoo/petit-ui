@@ -1,0 +1,136 @@
+<script setup lang="ts">
+import DemoFrame from '../.vitepress/theme/components/DemoFrame.vue'
+import TailwindDemo from '../.vitepress/theme/components/TailwindDemo.vue'
+</script>
+
+# 快速开始
+
+Petit UI 提供 CSS 自定义属性，以及可选的 Tailwind CSS 4 映射。选择一种方式，就能开始组合自己的界面。
+
+::: warning 当前使用源码预览版
+CSS 核心已经实现，但尚未发布功能版本。npm 上的 `petit-ui@0.0.0-alpha` 是早期占名版本，**不包含这里展示的 CSS 导出**。请按下方步骤从源码打包，不要直接从 registry 安装该版本。源码版本字段暂时仍为 `0.0.0-alpha`。
+:::
+
+## 取得可用的包
+
+使用 Node.js 24 LTS 和仓库指定的 pnpm。在一个新目录克隆并打包：
+
+```sh
+git clone https://github.com/eruoo/petit-ui.git
+cd petit-ui
+pnpm install
+pnpm --filter petit-ui pack --pack-destination "$PWD/artifacts"
+```
+
+在自己的应用目录安装刚生成的 tarball。把路径替换成你实际的克隆位置：
+
+```sh
+pnpm add /absolute/path/to/petit-ui/artifacts/petit-ui-0.0.0-alpha.tgz
+```
+
+生成目录是你本地的打包产物，无需提交。此 tarball 包含当前源码的 CSS，和 npm 上的同名版本内容不同。未来正式发版后，这里会改为 registry 安装说明。
+
+若应用本来就在该仓库的 pnpm workspace 内，也可以使用 `"petit-ui": "workspace:*"`。本文档站使用这一方式，并且只通过公开子路径导入。
+
+## 普通 CSS
+
+在支持 npm 包解析的 CSS 打包器中，例如 Vite，导入：
+
+```css
+@import 'petit-ui/tokens.css';
+
+.action {
+  background: var(--petit-color-primary);
+  color: var(--petit-color-on-primary);
+  border: 0;
+  border-radius: var(--petit-radius-full);
+  padding: 12px 24px;
+  font:
+    800 16px/1.5 system-ui,
+    sans-serif;
+  cursor: pointer;
+}
+.action:hover {
+  background: var(--petit-color-primary-hover);
+}
+.action:active {
+  background: var(--petit-color-primary-active);
+}
+.action:focus-visible {
+  outline: 3px solid var(--petit-color-focus);
+  outline-offset: 4px;
+}
+```
+
+```html
+<button class="action" type="button">收藏这份配方</button>
+```
+
+在 Vite 应用入口导入自己的样式文件：
+
+```ts
+import './style.css'
+```
+
+不使用打包器时，先用 `import.meta.resolve('petit-ui/tokens.css')` 定位已安装的 CSS，将该文件提供为静态资源，再使用实际 URL：
+
+```html
+<link rel="stylesheet" href="/assets/petit-tokens.css" />
+```
+
+浏览器不会直接解析 `petit-ui/tokens.css` 这样的 npm 包名。
+
+## Tailwind CSS 4
+
+完成上方 tarball 安装后，在已有 Vite 应用中安装 Tailwind 及插件：
+
+```sh
+pnpm add -D tailwindcss@4 @tailwindcss/vite@4
+```
+
+将插件添加到现有 Vite 配置，保留应用已经使用的 Vue 等插件：
+
+```ts
+import { defineConfig } from 'vite'
+import tailwindcss from '@tailwindcss/vite'
+
+export default defineConfig({
+  plugins: [tailwindcss()],
+})
+```
+
+样式入口中导入 Tailwind 与适配文件，再从应用入口导入该样式：
+
+```css
+@import 'tailwindcss';
+@import 'petit-ui/tailwind.css';
+```
+
+适配入口已经包含 tokens，不需要再导入 `tokens.css`。全部扩展名称带 `petit-`，不会替换 Tailwind 自带主题。
+
+<DemoFrame label="真实 Tailwind 编译示例"><TailwindDemo /></DemoFrame>
+
+下面就是这个交互示例的完整 Vue 源码。`bg-petit-primary` 等工具类来自真实适配入口；`px-6` 等间距由 Tailwind 提供。
+
+<<< @/.vitepress/theme/components/TailwindDemo.vue
+
+### 与现有文档样式共存
+
+`@import 'tailwindcss'` 会引入 Preflight。本文档站已经有 VitePress 基础样式，因此按 [Tailwind 官方方式](https://tailwindcss.com/docs/preflight#disabling-preflight)只导入主题与 utilities：
+
+```css
+@layer theme, base, components, utilities;
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css';
+@import 'petit-ui/tailwind.css';
+```
+
+VitePress 的基础样式未分层，因此这里也将 utilities 保持为未分层样式，避免按钮的背景、内边距被基础规则覆盖。
+
+本站另用 `source(none)` 与 `@source` 将扫描范围限制为示例组件，避免文档代码块中的类名生成无关样式。
+
+## 下一步
+
+- [了解语义与边界](./semantics)：哪些颜色可以做正文，哪些只适合装饰。
+- [主题与品牌覆盖](./themes)：全局、局部与 Portal 的主题作用域。
+- [查看 Reka UI 示例](/examples/tabs)：将样式与无样式交互控件组合。
