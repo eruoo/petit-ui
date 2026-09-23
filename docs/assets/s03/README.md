@@ -21,7 +21,7 @@
 
 ## 字体复现
 
-字体文件不纳入仓库。sources.json 的 `fonts` 提供 Nunito 和 Noto Sans SC 的下载 URL、许可与本轮实际文件校验值；对应源仓库的 OFL 文本应与下载字体一起保存。消费方将文件提供为 `/fonts/nunito.ttf` 与 `/fonts/notosanssc.ttf`，再加载：
+原始视觉研究不纳入字体文件；当前文档站已在 `site/.vitepress/theme/assets/` 自托管 Nunito 及其 OFL 许可，中文正文使用系统字体。sources.json 的 `fonts` 提供 Nunito 和 Noto Sans SC 的下载 URL、许可与本轮实际文件校验值；对应源仓库的 OFL 文本应与下载字体一起保存。消费方将文件提供为 `/fonts/nunito.ttf` 与 `/fonts/notosanssc.ttf`，再加载：
 
 ```css
 @font-face {

@@ -1,0 +1,26 @@
+{
+  "name": "petit-ui-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vitepress dev --host 127.0.0.1",
+    "build": "vitepress build",
+    "preview": "vitepress preview --host 127.0.0.1",
+    "typecheck": "vue-tsc --noEmit"
+  },
+  "dependencies": {
+    "petit-ui": "workspace:*",
+    "reka-ui": "2.10.5",
+    "vue": "3.5.43"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "4.3.3",
+    "@types/node": "^24.0.0",
+    "postcss": "8.5.28",
+    "tailwindcss": "4.3.3",
+    "typescript": "5.9.3",
+    "vite": "5.4.21",
+    "vitepress": "1.6.4",
+    "vue-tsc": "3.3.11"
+  }
+}

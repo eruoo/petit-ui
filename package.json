@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "check": "pnpm lint && pnpm format:check && pnpm test",
+    "check": "pnpm lint && pnpm format:check && pnpm test && pnpm site:check && pnpm site:build",
     "lint": "oxlint --deny-warnings .",
     "lint:fix": "oxlint --deny-warnings --fix .",
     "format": "oxfmt .",
@@ -11,7 +11,11 @@
     "test": "pnpm --filter petit-ui test",
     "prepare": "simple-git-hooks",
     "changelog": "git-cliff --config cliff.toml --offline",
-    "release:bump": "pnpm check && bumpp"
+    "release:bump": "pnpm check && bumpp",
+    "site:dev": "pnpm --filter petit-ui-site dev",
+    "site:build": "pnpm --filter petit-ui-site build",
+    "site:preview": "pnpm --filter petit-ui-site preview",
+    "site:check": "pnpm --filter petit-ui-site typecheck"
   },
   "devDependencies": {
     "@commitlint/cli": "21.2.3",
