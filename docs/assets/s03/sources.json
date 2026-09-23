@@ -1,0 +1,102 @@
+{
+  "baseline": "Accepted by the user as the first visual baseline on 2026-09-23; not a pixel-identical official reproduction.",
+  "reference": {
+    "source": "https://www.hoyolab.com/article/46776026",
+    "image": "S03, image 4, cooking interface; original 1778x1000",
+    "url": "https://upload-os-bbs.hoyolab.com/upload/2026/09/21/1144120dc6a2b40a3f64bbcd11e35212_4413257537860008632.png?x-oss-process=image%2Fresize%2Cs_1000%2Fauto-orient%2C0%2Finterlace%2C1%2Fformat%2Cwebp%2Fquality%2Cq_100",
+    "sha256": "d8dc62d2f820bbc77f4e3b5bee0163db3f03d532b42f86dea41a590bcd4b97e1",
+    "distribution": "Reference URL only. Official screenshot is not copied into this repository."
+  },
+  "assets": [
+    {
+      "icon": "chef-hat",
+      "source": "https://raw.githubusercontent.com/phosphor-icons/core/main/raw/fill/chef-hat-fill.svg",
+      "sha256": "f980f0be68b6e4acca9874aaa9b7b0e29abb09822b62699b8d7386379bd88c21"
+    },
+    {
+      "icon": "fork-knife",
+      "source": "https://raw.githubusercontent.com/phosphor-icons/core/main/raw/fill/fork-knife-fill.svg",
+      "sha256": "a2d70e21aa99f5648b122c1669eb852684b3d173d88f9c573de4a06f5ee45563"
+    },
+    {
+      "icon": "info",
+      "source": "https://raw.githubusercontent.com/phosphor-icons/core/main/raw/fill/info-fill.svg",
+      "sha256": "766982c8d529a74f075c6f6f993d898268643d50d080533aecbe8d42f4d7f8c2"
+    },
+    {
+      "icon": "caret-right",
+      "source": "https://raw.githubusercontent.com/phosphor-icons/core/main/raw/fill/caret-right-fill.svg",
+      "sha256": "21aa96a998e70cd7dfdfbc2178f3646b6b913d99123a605e213ed47879ea0197"
+    },
+    {
+      "asset": "chef-outline.svg",
+      "source": "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/chef-hat.svg",
+      "sha256": "aaf78c326e3f73b727fc029efcd5fb651b4059540ad81552210dbd3d785b25be"
+    },
+    {
+      "asset": "lucide-LICENSE",
+      "source": "https://raw.githubusercontent.com/lucide-icons/lucide/main/LICENSE",
+      "sha256": "b495047bd93a9b06913511076f504daba17d5bbeb3e0650f3bb53a4220329c57"
+    },
+    {
+      "asset": "spiral.svg",
+      "source": "https://raw.githubusercontent.com/phosphor-icons/core/main/raw/regular/spiral.svg",
+      "sha256": "8cb1c94458b87aea4bd78db7640a22f2a7e333d8fe7835475da096ab88716649"
+    },
+    {
+      "asset": "flower.svg",
+      "source": "https://raw.githubusercontent.com/phosphor-icons/core/main/raw/regular/flower.svg",
+      "sha256": "d97d697e7c83c5981833e2d7a43cc653ee081d5e6f6dda9fa887bdc77a3200e7"
+    },
+    {
+      "asset": "leaf.svg",
+      "source": "https://raw.githubusercontent.com/phosphor-icons/core/main/raw/regular/leaf.svg",
+      "sha256": "31c7e671256730130a7cfe8ccd717d65bc2f4ef2c272c6e1bd7faf14a2491770"
+    },
+    {
+      "asset": "sun.svg",
+      "source": "https://raw.githubusercontent.com/phosphor-icons/core/main/raw/regular/sun.svg",
+      "sha256": "9e7e4d1e5e87c0036ef7bcb3ed52f4d61997ac566d1c6b7f4601e503bd3094fc"
+    },
+    {
+      "asset": "cook-emblem-mask.png",
+      "kind": "independently generated example, not official source asset",
+      "generator": "built-in image_gen",
+      "reference": "S03-cooking-final-beta.webp, native 1778x1000, Cook area x1460 y915; magnified only for inspection",
+      "size": [1254, 1254],
+      "alpha_bbox": [34, 49, 1221, 1181],
+      "use": "Cook button only; transparent mask tinted from shared CSS tokens; Drink keeps Phosphor fork-knife",
+      "prompt": "Generate a transparent PNG cooking UI icon, using the attached screenshot only as a reference for the pictured fork-in-circle outline. A single flat black emblem: thick slightly hand-drawn circular ring, and a three-pronged rounded table fork inside it. The fork is tilted toward the upper left, with its handle touching and joining the ring at the bottom-right. Match the reference fork and circle proportions closely. The three fork prongs have rounded ends and two transparent gaps. All regions between the fork and ring, and outside the ring, must be true transparent alpha. Flat solid black only, no white or cream disk, no background, no yellow button, no knife, no text, no shading. Square high-resolution image, emblem fills 95% of canvas with small margins, for CSS mask display at 48 pixels.",
+      "sha256": "c68a052a25d403dcaed53d01961f80a7db02379cb2dad56db29127c95aa23d49"
+    },
+    {
+      "asset": "tea.png",
+      "kind": "independently generated example, not official source asset",
+      "generator": "built-in image_gen",
+      "size": [1254, 1254],
+      "alpha_bbox": [0, 85, 1221, 1206],
+      "prompt": "Use case: stylized-concept. Generate ONE isolated game inventory object on a genuinely transparent alpha background. Input reference is the provided cooking UI screenshot, use ONLY the Aromatic Fruit Tea cup illustration in the selected middle card on third row and in the detail header as shape/style reference. Do not recreate the UI. Subject: small squat ivory-white porcelain teacup seen from oblique top-down view, a rounded-square handle facing right, warm amber tea containing bright orange/red fruit pieces, a pale cream flower-like fruit slice and a few green mint leaves. Cup narrows softly toward its base, upper rim broad oval. Cup body has a thin pale olive-green decorative band and small pale green geometric motifs near the lower half. Hand-painted cozy video game inventory illustration, thick but soft dark brown/gray outlines, simplified readable shapes, modest soft painted shading, mildly irregular contours. Match reference silhouette and perspective closely. Center complete cup, occupying about 80% of a square canvas, suitable for display at 100x110 CSS pixels. Background: actual transparent pixels, no colored backdrop. Only the cup object; no saucer, ground shadow, card, frame, button, badges, circle background, text, watermark, decorative sparkles, or interface. Reference image is shape/style guidance only; do not copy the entire source control.",
+      "sha256": "3ab4c0200b70cb5079b8648b07c194d1d6e4bdf66545752b31c54758b010bf89"
+    },
+    {
+      "asset": "phosphor-LICENSE",
+      "sha256": "b5b1f1da112d18ea2147decfd48ddc1bf2b5aeb6c265381579340e95b15a2bb2"
+    }
+  ],
+  "fonts": [
+    {
+      "name": "nunito",
+      "font": "https://raw.githubusercontent.com/google/fonts/main/ofl/nunito/Nunito%5Bwght%5D.ttf",
+      "license": "SIL Open Font License 1.1",
+      "sha256": "bb55a5ca5c2042335b3991af27c4d0705d0ef41cac6164ac737fd8f2a1e85207",
+      "license_url": "https://raw.githubusercontent.com/google/fonts/main/ofl/nunito/OFL.txt"
+    },
+    {
+      "name": "notosanssc",
+      "font": "https://raw.githubusercontent.com/google/fonts/main/ofl/notosanssc/NotoSansSC%5Bwght%5D.ttf",
+      "license": "SIL Open Font License 1.1",
+      "sha256": "a3041811a78c361b1de50f953c805e0244951c21c5bd412f7232ef0d899af0da",
+      "license_url": "https://raw.githubusercontent.com/google/fonts/main/ofl/notosanssc/OFL.txt"
+    }
+  ]
+}

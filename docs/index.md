@@ -2,6 +2,10 @@
 
 ## 文档导航
 
+- [项目架构](architecture.md)：工作区职责、token 包与 Tailwind 适配层的边界，以及后续站点的位置。
+- [Token 第一版规范](specs/tokens-v1.md)：实施依据，包含公共变量、主题默认值、导出入口、发布范围与验收标准。
+- [S03 三个控件配方](recipes/s03-controls.md)：等比例对照、实际字体、token 与消费造型的分工及 CSS 组合。
+- [S03 视觉基线与资源](assets/s03/README.md)：已认可的实现截图、独立示例素材、图标许可与字体获取方式。
 - [开发指南](development.md)：安装依赖、运行检查、配置 Git hooks，以及理解 CSS 工具链的验证方式。
 - [版本与更新日志](release.md)：配置 bumpp 与 git-cliff、准备子包版本及生成 changelog。
 

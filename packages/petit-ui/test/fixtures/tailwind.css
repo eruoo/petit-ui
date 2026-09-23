@@ -1,10 +1,4 @@
 @import 'tailwindcss' source(none);
-@source inline('bg-petit-fixture');
+@import '../../src/tailwind.css';
 
-:root {
-  --petit-fixture-color: #123456;
-}
-
-@theme inline {
-  --color-petit-fixture: var(--petit-fixture-color);
-}
+@source inline('text-petit-foreground-accent border-petit-frame border-petit-selected font-petit-display font-petit-strong text-petit-heading text-petit-label text-petit-action text-petit-foreground-heading bg-petit-surface-accent-strong bg-petit-surface-accent-soft bg-petit-surface-band bg-petit-surface-accent border-petit-border-selected text-petit-link bg-petit-surface text-petit-foreground border-petit-border-strong outline-petit-focus rounded-petit-md bg-petit-primary/50 hover:bg-petit-primary-hover active:bg-petit-primary-active focus-visible:outline-petit-focus disabled:text-petit-foreground-disabled bg-red-500 dark:bg-red-500');
