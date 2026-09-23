@@ -1,0 +1,45 @@
+@import './tokens.css';
+
+@theme inline {
+  --color-petit-background: var(--petit-color-background);
+  --color-petit-surface: var(--petit-color-surface);
+  --color-petit-surface-hover: var(--petit-color-surface-hover);
+  --color-petit-surface-active: var(--petit-color-surface-active);
+  --color-petit-foreground: var(--petit-color-foreground);
+  --color-petit-foreground-muted: var(--petit-color-foreground-muted);
+  --color-petit-foreground-disabled: var(--petit-color-foreground-disabled);
+  --color-petit-border: var(--petit-color-border);
+  --color-petit-border-strong: var(--petit-color-border-strong);
+  --color-petit-focus: var(--petit-color-focus);
+  --color-petit-primary: var(--petit-color-primary);
+  --color-petit-primary-hover: var(--petit-color-primary-hover);
+  --color-petit-primary-active: var(--petit-color-primary-active);
+  --color-petit-on-primary: var(--petit-color-on-primary);
+  --color-petit-success: var(--petit-color-success);
+  --color-petit-on-success: var(--petit-color-on-success);
+  --color-petit-warning: var(--petit-color-warning);
+  --color-petit-on-warning: var(--petit-color-on-warning);
+  --color-petit-error: var(--petit-color-error);
+  --color-petit-on-error: var(--petit-color-on-error);
+  --color-petit-surface-accent: var(--petit-color-surface-accent);
+  --color-petit-border-selected: var(--petit-color-border-selected);
+  --color-petit-link: var(--petit-color-link);
+
+  --radius-petit-sm: var(--petit-radius-sm);
+  --radius-petit-md: var(--petit-radius-md);
+  --radius-petit-lg: var(--petit-radius-lg);
+  --radius-petit-full: var(--petit-radius-full);
+  --color-petit-foreground-heading: var(--petit-color-foreground-heading);
+  --color-petit-foreground-accent: var(--petit-color-foreground-accent);
+  --color-petit-surface-accent-strong: var(--petit-color-surface-accent-strong);
+  --color-petit-surface-accent-soft: var(--petit-color-surface-accent-soft);
+  --color-petit-surface-band: var(--petit-color-surface-band);
+
+  --border-width-petit-frame: var(--petit-border-width-frame);
+  --border-width-petit-selected: var(--petit-border-width-selected);
+  --font-weight-petit-display: var(--petit-font-weight-display);
+  --font-weight-petit-strong: var(--petit-font-weight-strong);
+  --text-petit-heading: var(--petit-font-size-heading);
+  --text-petit-label: var(--petit-font-size-label);
+  --text-petit-action: var(--petit-font-size-action);
+}
