@@ -7,28 +7,13 @@ import TailwindDemo from '../.vitepress/theme/components/TailwindDemo.vue'
 
 Petit UI 提供 CSS 自定义属性，以及可选的 Tailwind CSS 4 映射。选择一种方式，就能开始组合自己的界面。
 
-::: warning 当前使用源码预览版
-CSS 核心已经实现，但尚未发布功能版本。npm 上的 `petit-ui@0.0.0-alpha` 是早期占名版本，**不包含这里展示的 CSS 导出**。请按下方步骤从源码打包，不要直接从 registry 安装该版本。当前源码正在准备 `0.0.1`。
-:::
-
-## 取得可用的包
-
-使用 Node.js 24 LTS 和仓库指定的 pnpm。在一个新目录克隆并打包：
+## 安装
 
 ```sh
-git clone https://github.com/eruoo/petit-ui.git
-cd petit-ui
-pnpm install
-pnpm --filter petit-ui pack --pack-destination "$PWD/artifacts"
+pnpm add petit-ui
 ```
 
-在自己的应用目录安装刚生成的 tarball。把路径替换成你实际的克隆位置：
-
-```sh
-pnpm add /absolute/path/to/petit-ui/artifacts/petit-ui-0.0.1.tgz
-```
-
-生成目录是你本地的打包产物，无需提交。此 tarball 包含当前源码的 CSS。`0.0.1` 发布到 npm 后，这里会改为 registry 安装说明。
+CSS 导出从 `0.0.1` 开始提供。普通 CSS 用法无需安装 Tailwind；使用 Tailwind 适配入口时，再按下方说明安装对应工具链。
 
 若应用本来就在该仓库的 pnpm workspace 内，也可以使用 `"petit-ui": "workspace:*"`。本文档站使用这一方式，并且只通过公开子路径导入。
 
@@ -82,7 +67,7 @@ import './style.css'
 
 ## Tailwind CSS 4
 
-完成上方 tarball 安装后，在已有 Vite 应用中安装 Tailwind 及插件：
+完成上方安装后，在已有 Vite 应用中安装 Tailwind 及插件：
 
 ```sh
 pnpm add -D tailwindcss@4 @tailwindcss/vite@4
