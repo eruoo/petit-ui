@@ -6,9 +6,17 @@
 
 `petit-ui@0.0.0-alpha` 已由维护者手动发布，用于建立 npm 包。这个版本尚未提供正式 token API，不能作为 token 功能完成的标志。已发布的版本号不能再次用于发布不同内容。
 
+当前待发布版本为 `0.0.1`，包含 CSS tokens 与 Tailwind CSS 4 适配入口，使用 MIT 许可证。该版本不带预发布后缀，发布时使用 `latest` dist-tag；版本文件更新不代表 registry 已有该版本。
+
 仓库通过 GitHub Actions 的 `publish.yml` 使用 npm Trusted Publishing（OIDC）发布。需要先在 npm 配置与该工作流匹配的 Trusted Publisher；工作流合并、配置保存和 dry-run 都不代表已成功完成真实 OIDC 发布。正式 token 的内容与打包要求见 [token 第一版规范](specs/tokens-v1.md)。
 
-功能版本发布前，应完成规范中的消费验收，选择未发布的新版本号，并由维护者明确许可证。更新版本、提交及合并、打发布标签和 npm 发布分别按当次授权执行；`release:bump` 不代替这些动作。
+功能版本发布前，应完成规范中的消费验收，并确认新版本号尚未被使用。更新版本、提交及合并、打发布标签和 npm 发布分别按当次授权执行；`release:bump` 不代替这些动作。
+
+## 项目许可证
+
+根目录 [LICENSE](../LICENSE) 原样取自 [LoTwT/ts-starter 的 LICENSE](https://github.com/LoTwT/ts-starter/blob/abf6c39e7bccd41e3d937cc5a75dba8febdd4b3b/LICENSE)，保留 `2026 LoTwT <https://github.com/LoTwT>` 的版权署名。根目录文件是项目软件许可的权威文本。
+
+`packages/petit-ui/package.json` 声明 `"license": "MIT"`；[子包 LICENSE](../packages/petit-ui/LICENSE) 保持与根目录逐字一致，随 npm tarball 分发。文档站使用的第三方图标和字体继续保留各自许可，见[设计来源与许可](../site/credits.md)。
 
 ## CI 与发布边界
 
@@ -55,7 +63,7 @@ npm trust github petit-ui --file publish.yml --repo eruoo/petit-ui --allow-publi
 
 ## 发布一个新版本
 
-1. 完成消费验收、确认许可证与未使用的新版本号，通过 `pnpm release:bump` 更新子包版本和 changelog，检查打包范围。
+1. 完成消费验收、确认未使用的新版本号，通过 `pnpm release:bump` 更新子包版本和 changelog，检查打包范围及 LICENSE。
 2. 将发布改动提交并合入 `main`，确认 CI 通过。发布标签必须指向已进入 `main` 的对应提交。
 3. 获得本次发版授权后，创建并推送与子包版本完全一致的标签，例如：
 

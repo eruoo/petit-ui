@@ -1,7 +1,8 @@
 {
   "name": "petit-ui",
-  "version": "0.0.0-alpha",
+  "version": "0.0.1",
   "description": "Framework-independent CSS design tokens with an optional Tailwind CSS v4 adapter.",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/eruoo/petit-ui.git",

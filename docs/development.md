@@ -51,7 +51,7 @@ PostCSS 在这里作为校验解析器使用，无需另建 `postcss.config`，�
 
 ## 打包与浏览器验收
 
-在系统临时目录创建验收目录，执行 `pnpm --filter petit-ui pack --pack-destination <临时目录>`。检查 tarball 恰好包含 `package.json`、`README.md`、`src/tokens.css` 和 `src/tailwind.css`。分别建立普通 CSS 和 Tailwind 消费目录，安装该 tarball，避免 workspace 链接掩盖发布文件或导出路径问题。
+在系统临时目录创建验收目录，执行 `pnpm --filter petit-ui pack --pack-destination <临时目录>`。检查 tarball 恰好包含 `package.json`、`README.md`、`LICENSE`、`src/tokens.css` 和 `src/tailwind.css`，其中 LICENSE 与根目录文本一致。分别建立普通 CSS 和 Tailwind 消费目录，安装该 tarball，避免 workspace 链接掩盖发布文件或导出路径问题。
 
 普通消费目录只安装 tarball，确认没有 Tailwind 或其他运行时依赖，三个公开子路径可解析，两个 CSS 文件的内部依赖完整。通过本地静态服务器提供已解析的 `tokens.css`。Tailwind 消费目录额外安装与工作区一致的 Tailwind 和 CLI，使用公开包名 import 编译，再由浏览器加载输出。
 
