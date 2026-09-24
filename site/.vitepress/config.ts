@@ -5,17 +5,9 @@ export default defineConfig({
   lang: 'zh-CN',
   title: 'Petit UI',
   description: '有温度的 CSS design tokens。奶油纸色、圆润轮廓，自由组合。',
-  appearance: true,
+  appearance: false,
   cleanUrls: true,
-  head: [
-    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }],
-    // VitePress owns preference storage and .dark; sync before paint, outside Vue's app root.
-    [
-      'script',
-      {},
-      `(()=>{const root=document.documentElement;const sync=()=>{root.dataset.theme=root.classList.contains('dark')?'dark':'light'};sync();new MutationObserver(sync).observe(root,{attributes:true,attributeFilter:['class']})})()`,
-    ],
-  ],
+  head: [['link', { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }]],
   vite: {
     plugins: [tailwindcss()],
     build: {
@@ -35,8 +27,16 @@ export default defineConfig({
         items: [
           { text: '快速开始', link: '/guide/getting-started' },
           { text: '语义与使用边界', link: '/guide/semantics' },
+          { text: '常见 UI 状态配方', link: '/guide/states' },
           { text: '主题与品牌覆盖', link: '/guide/themes' },
           { text: 'Token 浏览器', link: '/tokens' },
+        ],
+      },
+      {
+        text: '原生控件与状态',
+        items: [
+          { text: '表单 · 配方校验', link: '/examples/form' },
+          { text: '按钮与状态反馈', link: '/examples/states' },
         ],
       },
       {
@@ -45,6 +45,7 @@ export default defineConfig({
           { text: 'Tabs · 切换内容', link: '/examples/tabs' },
           { text: 'Dialog · 开始烹饪', link: '/examples/dialog' },
           { text: 'Checkbox · 准备食材', link: '/examples/checkbox' },
+          { text: 'Dropdown Menu · 配方操作', link: '/examples/menu' },
         ],
       },
       { text: '关于', items: [{ text: '设计来源与许可', link: '/credits' }] },
@@ -72,9 +73,6 @@ export default defineConfig({
     docFooter: { prev: '上一页', next: '下一页' },
     sidebarMenuLabel: '文档目录',
     returnToTopLabel: '返回顶部',
-    darkModeSwitchLabel: '切换主题',
-    lightModeSwitchTitle: '切换为浅色',
-    darkModeSwitchTitle: '切换为深色',
     socialLinks: [{ icon: 'github', link: 'https://github.com/eruoo/petit-ui' }],
     footer: { message: 'CSS tokens，留给你自由组合。', copyright: 'Petit UI · 独立的界面风格探索' },
   },

@@ -27,37 +27,7 @@
   --petit-color-surface-accent-strong: #85b6bc;
   --petit-color-surface-accent-soft: #c7dcd6;
   --petit-color-surface-band: #e5d8ba;
-}
-
-:where([data-theme='dark']) {
-  --petit-color-background: #252a28;
-  --petit-color-surface: #323833;
-  --petit-color-surface-hover: #40483f;
-  --petit-color-surface-active: #4b5348;
-  --petit-color-foreground: #f6f3e7;
-  --petit-color-foreground-muted: #d0c7b0;
-  --petit-color-foreground-disabled: #8d9487;
-  --petit-color-border: #bfb69b;
-  --petit-color-border-strong: #b2a58b;
-  --petit-color-focus: #b3d9db;
-  --petit-color-primary: #f3c75d;
-  --petit-color-primary-hover: #ffda7e;
-  --petit-color-primary-active: #e8b645;
-  --petit-color-on-primary: #564630;
-  --petit-color-success: #a6c99f;
-  --petit-color-on-success: #252a28;
-  --petit-color-warning: #ebc578;
-  --petit-color-on-warning: #252a28;
-  --petit-color-error: #f0aba0;
-  --petit-color-on-error: #252a28;
-  --petit-color-surface-accent: #385657;
-  --petit-color-border-selected: #edc17a;
-  --petit-color-link: #edc17a;
-  --petit-color-foreground-heading: #f6f3e7;
-  --petit-color-foreground-accent: #edc17a;
-  --petit-color-surface-accent-strong: #30494b;
-  --petit-color-surface-accent-soft: #48645e;
-  --petit-color-surface-band: #4e5142;
+  --petit-color-scrim: rgb(37 42 40 / 65%);
 }
 
 :where(:root) {

@@ -132,5 +132,5 @@ VitePress 的基础样式未分层，因此这里也将 utilities 保持为未�
 ## 下一步
 
 - [了解语义与边界](./semantics)：哪些颜色可以做正文，哪些只适合装饰。
-- [主题与品牌覆盖](./themes)：全局、局部与 Portal 的主题作用域。
+- [主题与品牌覆盖](./themes)：全局、局部与 Portal 的颜色覆盖。
 - [查看 Reka UI 示例](/examples/tabs)：将样式与无样式交互控件组合。

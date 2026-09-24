@@ -27,11 +27,11 @@ defineProps<{ disabled?: boolean }>()
   isolation: isolate;
 }
 
-.cook:hover {
+.cook:enabled:hover {
   background: var(--petit-color-primary-hover);
 }
 
-.cook:active {
+.cook:enabled:active {
   background: var(--petit-color-primary-active);
 }
 
@@ -50,11 +50,7 @@ defineProps<{ disabled?: boolean }>()
   top: 12px;
   width: 51px;
   height: 51px;
-  color: color-mix(
-    in srgb,
-    var(--petit-color-on-primary) var(--recipe-dark-mix),
-    color-mix(in srgb, var(--petit-color-primary) 50%, var(--petit-color-border-selected))
-  );
+  color: color-mix(in srgb, var(--petit-color-primary) 50%, var(--petit-color-border-selected));
 }
 
 .cook-pattern {

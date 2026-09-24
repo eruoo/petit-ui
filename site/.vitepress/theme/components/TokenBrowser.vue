@@ -27,8 +27,7 @@ const rows = computed(() =>
         <thead>
           <tr>
             <th>CSS 变量 / 用途</th>
-            <th>浅色</th>
-            <th>深色</th>
+            <th>默认值</th>
           </tr>
         </thead>
         <tbody>
@@ -38,13 +37,8 @@ const rows = computed(() =>
               <p class="usage">{{ row.usage }}</p>
             </td>
             <td>
-              <span v-if="row.color" class="swatch" :style="{ background: row.light }" /><code>{{
-                row.light
-              }}</code>
-            </td>
-            <td>
-              <span v-if="row.color" class="swatch" :style="{ background: row.dark }" /><code>{{
-                row.dark
+              <span v-if="row.color" class="swatch" :style="{ background: row.value }" /><code>{{
+                row.value
               }}</code>
             </td>
           </tr>

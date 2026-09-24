@@ -5,8 +5,7 @@ import { parse } from 'postcss'
 
 export interface TokenRow {
   name: string
-  light: string
-  dark: string
+  value: string
   usage: string
   color: boolean
 }
@@ -22,28 +21,27 @@ export default {
     const rows = new Map<string, TokenRow>()
     const spec = readFileSync(specPath, 'utf8')
     const usages = new Map<string, string>()
-    for (const line of spec.split('\n')) {
+    let definitionSection = false
+    for (const line of spec.split(/\r?\n/)) {
+      if (line.startsWith('## ')) {
+        definitionSection = ['## 颜色', '## 圆角', '## 共用边框与排版数值'].includes(line)
+      }
+      // Contrast and recipe tables reuse token names but do not define their meaning.
+      if (!definitionSection) continue
       const cells = line.split('|').map((cell) => cell.trim())
       const key = cells[1]?.match(/^`([^`]+)`$/)?.[1]
       if (!key || !cells[2]?.startsWith('`')) continue
       const name = key.startsWith('--petit-') ? key : `--petit-color-${key}`
       usages.set(name, cells.at(-2) ?? '')
     }
-    css.walkRules((rule) => {
-      const dark = rule.selector.includes("[data-theme='dark']")
-      rule.walkDecls(/^--petit-/, (declaration) => {
-        const { prop: name, value } = declaration
-        const usage = usages.get(name)
-        if (!usage) throw new Error(`Missing authoritative token description: ${name}`)
-        const row = rows.get(name) ?? {
-          name,
-          light: value,
-          dark: value,
-          usage,
-          color: name.startsWith('--petit-color-'),
-        }
-        if (dark) row.dark = value
-        rows.set(name, row)
+    css.walkDecls(/^--petit-/, ({ prop: name, value }) => {
+      const usage = usages.get(name)
+      if (!usage) throw new Error(`Missing authoritative token description: ${name}`)
+      rows.set(name, {
+        name,
+        value,
+        usage,
+        color: name.startsWith('--petit-color-'),
       })
     })
     return [...rows.values()]

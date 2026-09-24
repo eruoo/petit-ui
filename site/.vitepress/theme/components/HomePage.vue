@@ -22,11 +22,11 @@ import DialogDemo from './DialogDemo.vue'
         </div>
         <p class="release-note">源码预览版 · CSS 功能尚未发布至 npm</p>
       </div>
-      <div class="hero-object petit-demo" data-theme="light">
+      <div class="hero-object petit-demo">
         <span class="object-index">01 / THE RECIPE COLLECTION</span>
         <div class="tea-display"><TeaCard /></div>
         <div class="object-caption"><span>Aromatic Fruit Tea</span><span>一杯果茶的灵感</span></div>
-        <DialogDemo theme="light" />
+        <DialogDemo />
         <p class="object-hint">点按 Cook，体验真实交互</p>
       </div>
     </section>
@@ -46,7 +46,7 @@ import DialogDemo from './DialogDemo.vue'
       <div class="principle">
         <span class="section-index">03 — PERSONALITY</span>
         <h2>留出改变的余地</h2>
-        <p>浅色、深色、局部主题。覆盖变量，就能写下自己的配色。</p>
+        <p>从奶油纸色出发。覆盖变量，就能写下自己的品牌配色。</p>
         <a :href="withBase('/guide/themes')">试试主题覆盖 →</a>
       </div>
     </section>

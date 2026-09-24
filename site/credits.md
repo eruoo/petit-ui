@@ -7,7 +7,7 @@ import sources from '../docs/assets/s03/sources.json?url'
 
 # 设计来源与许可
 
-Petit UI 是独立的 CSS token 项目，不是星布谷地的官方组件库。默认浅色参考了公开界面中的颜色关系，深色是本项目为网页补充的设计。
+Petit UI 是独立的 CSS token 项目，不是星布谷地的官方组件库。默认浅色参考了公开界面中的颜色关系。
 
 ## 视觉依据
 
