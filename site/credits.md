@@ -21,7 +21,7 @@ Petit UI 是独立的 CSS token 项目，不是星布谷地的官方组件库。
 
 Cook mask 仅用于 Cook，保留三齿叉柄连接外围圆环的轮廓。图片尺寸、校验值、来源与完整生成提示词保存在仓库，并由本站提供同一份<a :href="sources" download>来源记录 sources.json</a>。
 
-项目尚未决定整体软件许可证；本站不替维护者为独立生成素材或整个项目另行声明许可证。功能发布与许可选择将另行处理。
+项目软件采用 [MIT 许可证](https://github.com/eruoo/petit-ui/blob/main/LICENSE)。下列第三方图标与字体继续遵循各自的许可。
 
 ## 图标
 

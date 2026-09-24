@@ -1,6 +1,6 @@
 # Token 第一版规范
 
-状态：用户已认可当前版本作为首版视觉基线（2026-09-23），CSS 功能与消费验证已完成。源码仍保留 `0.0.0-alpha`；npm 上该版本只包含工程初始化内容，功能发版需另选新版本号。
+状态：用户已认可当前版本作为首版视觉基线（2026-09-23），CSS 功能与消费验证已完成。当前版本、许可证和发布准备状态见[版本与发布](../release.md#当前发布状态)。
 
 本文件维护第一版的公共 token、主题行为、包接口及验收标准。工作区职责见[项目架构](../architecture.md)。实现与规范不一致时，应修正实现，或明确说明取舍并同步修订本文件。
 
@@ -32,7 +32,7 @@ S03 保存图为 1778 × 1000。研究采用左上角为原点的 5 × 5 像素 
 
 英文字体样例实际加载 Nunito 可变字体，标题采用 900；主操作对照 800／850／900 后采用 800，辅助行也采用 800，部分字号按源图进行光学微调；中文单独加载 Noto Sans SC 900。二者采用 OFL-1.1，字体文件和加载声明只属于临时消费样例，不进入包；没有取得或假定使用官方字体。消费方需自行提供已加载的字体，`ui-rounded` 或一个字重数值不能保证实际字形。可复现的结构与 CSS 组合见[三个控件配方](../recipes/s03-controls.md)，包含边框、层级、比例与变量引用。
 
-此前已从蓝灰方案改为 23 色；本轮保留已有名称，增加四个跨组件颜色和七个共用数值，精修中再补充一个仅限大号文字的强调颜色。默认颜色有意进一步校准。曾用 `text-petit-primary` 表达链接的消费方应改用 `text-petit-link`；胶囊操作使用 `rounded-petit-full`。API 尚未发布功能版本，本次不改变包版本和工程范围。
+此前已从蓝灰方案改为 23 色；本轮保留已有名称，增加四个跨组件颜色和七个共用数值，精修中再补充一个仅限大号文字的强调颜色。默认颜色有意进一步校准。曾用 `text-petit-primary` 表达链接的消费方应改用 `text-petit-link`；胶囊操作使用 `rounded-petit-full`。实现阶段没有发布功能版本，后续版本安排由[发布流程](../release.md)维护。
 
 ## 分层与命名
 
@@ -220,13 +220,13 @@ Tailwind 使用方先导入 Tailwind，再导入适配入口：
 - `description`：`Framework-independent CSS design tokens with an optional Tailwind CSS v4 adapter.`
 - `repository`：类型为 `git`，URL 为 `git+https://github.com/eruoo/petit-ui.git`，`directory` 为 `packages/petit-ui`。
 - `exports` 只包含上表的三个子路径，分别指向 `./src/tokens.css`、`./src/tailwind.css`、`./package.json`。
-- `files` 只列出 `src/tokens.css` 和 `src/tailwind.css`；npm 自动收录包的 `package.json` 和 README。
+- `files` 只列出 `src/tokens.css` 和 `src/tailwind.css`；npm 自动收录包的 `package.json`、README 和 LICENSE。
 - `sideEffects` 使用 `["**/*.css"]`，保留使用方主动导入的样式。
-- 保留现有名称、版本、测试脚本、开发依赖以及可选 Tailwind peer dependency，不增加 `main`、`module`、`types`、构建脚本或 `dist`。
+- 保留现有名称、测试脚本、开发依赖以及可选 Tailwind peer dependency；版本通过发布流程维护，不增加 `main`、`module`、`types`、构建脚本或 `dist`。
 
-实现后的 tarball 应恰好包含 `package.json`、`README.md`、`src/tokens.css`、`src/tailwind.css` 四个文件；测试、fixture、内部文档和临时产物不进入包。
+tarball 应恰好包含 `package.json`、`README.md`、`LICENSE`、`src/tokens.css`、`src/tailwind.css` 五个文件；测试、fixture、内部文档和临时产物不进入包。
 
-README 提供两个真实导入入口、主要角色说明、默认配色、局部覆盖、品牌状态值独立、禁用颜色用途，以及当前 alpha API 状态。维护者尚未选择许可证，本次不自行添加 LICENSE、`license` 字段或许可声明；许可证选择由维护者在后续功能版本发布前处理，不阻塞本地实现。
+README 提供两个真实导入入口、主要角色说明、默认配色、局部覆盖、品牌状态值独立、禁用颜色用途，以及当前早期 API 状态。项目许可证、来源与子包的分发要求见[项目许可证](../release.md#项目许可证)。
 
 ## 验收
 
@@ -288,7 +288,7 @@ README 提供两个真实导入入口、主要角色说明、默认配色、局�
 - `pnpm check` 通过；实际 tarball 的文件范围、入口和独立消费验证通过；浏览器验收完成并留有结果。
 - README 与开发指南同步到实际实现状态，本文件的状态说明同步更新。
 - 一次本地实现交付即可独立使用，无需后续站点或 OIDC 才能运行。预计涉及 8 个以上源码、测试和文档文件，修改必须围绕这一个交付范围。
-- 保留 `0.0.0-alpha` 版本字段；代码通过 PR 合并与功能发版分开处理，本轮不执行版本变更、npm 发布、dist-tag 修改或发布标签。
+- 首次实现阶段保留了 `0.0.0-alpha` 版本字段，代码通过 PR 合并与功能发版分开处理；后续版本变更与发布按[发布流程](../release.md)执行。
 
 本次没有外部服务、凭据或数据迁移需求。失败时保留诊断结果并修正本地实现；不通过重新发布已有版本处理问题。删除公共名称、修改语义、入口或主题选择方式时，先更新规范并说明消费方迁移方式。
 
