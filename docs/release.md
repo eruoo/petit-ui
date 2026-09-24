@@ -1,4 +1,4 @@
-# 版本与更新日志
+# 版本与发布
 
 版本号由 `packages/petit-ui/package.json` 维护。根包 `petit-ui-monorepo` 为私有工作区，不设置发布版本。
 
@@ -6,9 +6,67 @@
 
 `petit-ui@0.0.0-alpha` 已由维护者手动发布，用于建立 npm 包。这个版本尚未提供正式 token API，不能作为 token 功能完成的标志。已发布的版本号不能再次用于发布不同内容。
 
-OIDC 暂不接入，后续仍由维护者安排手动发布。本轮通过代码 PR 合并首版 tokens 与已认可的视觉基线，保留现有版本字段；代码合并不等于 npm 功能发版，不操作 npm dist-tags 或发布标签。正式 token 的内容与打包要求见 [token 第一版规范](specs/tokens-v1.md)。
+仓库通过 GitHub Actions 的 `publish.yml` 使用 npm Trusted Publishing（OIDC）发布。需要先在 npm 配置与该工作流匹配的 Trusted Publisher；工作流合并、配置保存和 dry-run 都不代表已成功完成真实 OIDC 发布。正式 token 的内容与打包要求见 [token 第一版规范](specs/tokens-v1.md)。
 
 功能版本发布前，应完成规范中的消费验收，选择未发布的新版本号，并由维护者明确许可证。更新版本、提交及合并、打发布标签和 npm 发布分别按当次授权执行；`release:bump` 不代替这些动作。
+
+## CI 与发布边界
+
+`.github/workflows/ci.yml` 在面向 `main` 的 PR 和 `main` 推送时执行冻结锁文件安装及 `pnpm check`。检查内容见[开发指南](development.md#安装与检查)。
+
+`.github/workflows/publish.yml` 仅由 `petit-ui@*` 标签推送触发，使用 GitHub 托管的 Ubuntu runner。发布前确认标签提交已进入 `main`、标签与子包版本完全一致，再重新运行完整检查。从 `packages/petit-ui/` 打包后，将生成的同一份 tarball 发布到 npm；根包和 `site/` 不参与发布。
+
+Node.js 使用 24，pnpm 读取根包的 `packageManager`，发布 runner 的 npm 固定为 11.16.0。工作流中的 Actions 固定到完整提交 SHA。发布 job 只申请 `contents: read` 与 `id-token: write`，不需要配置 `NPM_TOKEN` 或 `NODE_AUTH_TOKEN` secret。
+
+允许的版本格式和 npm dist-tag 由 `.github/scripts/release-metadata.mjs` 校验：
+
+| 版本示例                       | npm dist-tag |
+| ------------------------------ | ------------ |
+| `0.1.0-alpha.0`、`0.1.0-alpha` | `alpha`      |
+| `0.1.0-beta.0`                 | `beta`       |
+| `0.1.0-rc.0`                   | `rc`         |
+| `0.1.0`                        | `latest`     |
+
+预发布只接受 `alpha`、`beta`、`rc`，可附加一个不带前导零的数字段；暂不接受其他渠道或 build metadata。预发布不会更新 `latest`。已存在的 npm 版本不可覆盖，失败时先查看 Actions 日志和 registry 状态，不移动已发布的 Git 标签来重试。
+
+## npm Trusted Publisher 一次性配置
+
+发布工作流合入 `main` 后，由包维护者登录 npm，在 [`petit-ui` 包设置](https://www.npmjs.com/package/petit-ui/access)中添加 GitHub Actions Trusted Publisher：
+
+| 字段                 | 值                                       |
+| -------------------- | ---------------------------------------- |
+| Organization or user | `eruoo`                                  |
+| Repository           | `petit-ui`                               |
+| Workflow filename    | `publish.yml`                            |
+| Environment          | 留空，当前 job 未绑定 GitHub Environment |
+| 允许的发布方式       | 启用 `npm publish`                       |
+
+文件名只填写 `publish.yml`，不包含 `.github/workflows/` 路径。npm 新建的 Trusted Publisher 默认允许 staged publishing；本项目采用直接发布，必须额外允许 `npm publish`。已有绑定先核对内容，避免重复创建或移除其他仍在使用的绑定。
+
+也可使用 npm 11.16.0 CLI 配置，登录和 2FA 由维护者完成：
+
+```sh
+npm login --registry=https://registry.npmjs.org
+npm trust list petit-ui
+npm trust github petit-ui --file publish.yml --repo eruoo/petit-ui --allow-publish
+```
+
+仓库当前为私有仓库，可以使用 OIDC 认证，但 npm provenance 要求源码仓库公开。因此工作流在私有仓库关闭 provenance；将来仓库公开后会启用。不要为了获得 provenance 改变仓库可见性。具体支持条件和配置方式以 [npm Trusted Publishing 文档](https://docs.npmjs.com/trusted-publishers/)及 [npm trust 命令文档](https://docs.npmjs.com/cli/v11/commands/npm-trust/)为准。
+
+## 发布一个新版本
+
+1. 完成消费验收、确认许可证与未使用的新版本号，通过 `pnpm release:bump` 更新子包版本和 changelog，检查打包范围。
+2. 将发布改动提交并合入 `main`，确认 CI 通过。发布标签必须指向已进入 `main` 的对应提交。
+3. 获得本次发版授权后，创建并推送与子包版本完全一致的标签，例如：
+
+   ```sh
+   git tag petit-ui@0.1.0-alpha.0 <已合入-main-的发布提交>
+   git push origin refs/tags/petit-ui@0.1.0-alpha.0
+   ```
+
+4. 检查 Publish workflow 的打包内容和发布结果，再用 `npm view petit-ui@0.1.0-alpha.0 version dist --json` 及 `npm view petit-ui dist-tags --json` 核对 registry；安装 registry 中的该版本验证 CSS 导出。
+
+`npm publish --dry-run` 可以检查待发布内容，但不会验证真实 OIDC 交换或 Trusted Publisher 绑定。只有首次真实发布成功后，才能确认完整认证链路可用。如果 npm 已发布而后续步骤失败，先核对该版本，不重新使用同一版本号发布其他内容。
 
 ## 命令
 

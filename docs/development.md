@@ -8,17 +8,20 @@
 
 首次安装执行 `pnpm install`；CI 使用 `pnpm install --frozen-lockfile`。
 
-| 命令                | 用途                                                     |
-| ------------------- | -------------------------------------------------------- |
-| `pnpm check`        | 依次执行代码、格式、token 测试、站点类型检查和静态构建。 |
-| `pnpm lint`         | 使用 Oxlint 检查 JS/TS，错误和警告均使检查失败。         |
-| `pnpm lint:fix`     | 修复 Oxlint 可自动修复的问题。                           |
-| `pnpm format`       | 使用 Oxfmt 格式化代码、CSS、配置和文档。                 |
-| `pnpm format:check` | 只检查格式，不修改文件。                                 |
-| `pnpm test`         | 运行 `petit-ui` 子包的 Node.js 测试。                    |
-| `pnpm prepare`      | 安装或更新 Git hooks。                                   |
+| 命令                | 用途                                                               |
+| ------------------- | ------------------------------------------------------------------ |
+| `pnpm check`        | 依次执行代码、格式、token 与发布校验测试、站点类型检查和静态构建。 |
+| `pnpm lint`         | 使用 Oxlint 检查 JS/TS，错误和警告均使检查失败。                   |
+| `pnpm lint:fix`     | 修复 Oxlint 可自动修复的问题。                                     |
+| `pnpm format`       | 使用 Oxfmt 格式化代码、CSS、配置和文档。                           |
+| `pnpm format:check` | 只检查格式，不修改文件。                                           |
+| `pnpm test`         | 运行 token 与发布元信息的 Node.js 测试。                           |
+| `pnpm test:release` | 只运行版本、发布标签与 npm dist-tag 的校验测试。                   |
+| `pnpm prepare`      | 安装或更新 Git hooks。                                             |
 
 Oxlint 使用根目录 `.oxlintrc.json`，启用 correctness 检查和 Node.js 环境。Oxfmt 使用 `.oxfmtrc.json`，JS/TS 使用单引号、不写分号，其他格式采用工具默认值。锁文件由 pnpm 维护，不交给 Oxfmt 格式化。两者均遵循 `.gitignore`。
+
+GitHub Actions 的 CI 对面向 `main` 的 PR 和 `main` 推送运行同一套 `pnpm check`。发布标签触发的流程会再次执行检查，版本格式、OIDC 绑定与发布步骤见[版本与发布](release.md)。
 
 ## Git hooks
 
@@ -56,7 +59,7 @@ PostCSS 在这里作为校验解析器使用，无需另建 `postcss.config`，�
 
 状态配方变更按[常见 UI 状态配方](../site/guide/states.md)提取消费代码，验证选中与焦点、错误与焦点、禁用与悬停，以及破坏性操作的按下配对。遮罩验证默认 alpha、局部覆盖、局部默认颜色重置和 Tailwind `/50` 的叠加结果。按变更范围复用未受影响的历史造型记录，不把历史记录写成新一轮结果。
 
-项目采用直接发布 CSS 源码的方式，不生成 `dist`。一次性浏览器样例、打包产物和消费检查放在系统临时目录，保留可核对的检查记录；最终所需的独立示例素材、来源和实现截图集中保存在 [S03 资源](assets/s03/README.md)，不依赖临时目录，也不进入发布白名单。版本更新和 changelog 生成方式见[版本与更新日志](release.md)。
+项目采用直接发布 CSS 源码的方式，不生成 `dist`。一次性浏览器样例、打包产物和消费检查放在系统临时目录，保留可核对的检查记录；最终所需的独立示例素材、来源和实现截图集中保存在 [S03 资源](assets/s03/README.md)，不依赖临时目录，也不进入发布白名单。版本更新和 changelog 生成方式见[版本与发布](release.md)。
 
 ## 文档站开发与验证
 
