@@ -20,13 +20,6 @@
 ```css
 @import 'petit-ui/tokens.css';
 
-/* 只属于消费配方；最近的显式主题重置比例，颜色仍在控件处求值。 */
-:where(:root, [data-theme='light']) {
-  --recipe-dark-mix: 0%;
-}
-:where([data-theme='dark']) {
-  --recipe-dark-mix: 100%;
-}
 * {
   box-sizing: border-box;
 }
@@ -103,12 +96,12 @@ button:focus-visible {
 
 ## 选择卡
 
-原生按钮用 `aria-pressed` 表示选择。8px 赭色边完整包裹 10px 奶油框，取消选择保留占位。31px 图标容器的可见轮廓约 23px；与面板共享填充、轮廓颜色和线宽，按不同上下文单独定位。
+原生按钮用 `aria-pressed` 表示选择，右上角勾号提供可见的非颜色标记。8px 赭色边完整包裹 10px 奶油框，取消选择保留占位。31px 图标容器的可见轮廓约 23px；与面板共享填充、轮廓颜色和线宽，按不同上下文单独定位。
 
 装饰弧由 11 个 13px 符号组成，半径 61px，从 −76° 到 76°；使用青灰混色与 32% 透明度，避免规则褐色圆点圈。纹样只承担装饰，不表达状态。
 
 ```html
-<button class="recipe-card" aria-label="Aromatic Fruit Tea" aria-pressed="true">
+<button class="recipe-card" type="button" aria-label="Aromatic Fruit Tea" aria-pressed="true">
   <span class="card-shell"
     ><span class="card-surface"
       ><span class="card-arc" aria-hidden="true"
@@ -131,6 +124,7 @@ button:focus-visible {
       </span></span
     ></span
   >
+  <span class="selection-mark" aria-hidden="true">✓</span>
 </button>
 ```
 
@@ -148,6 +142,26 @@ button:focus-visible {
 .recipe-card[aria-pressed='true'] {
   background: var(--petit-color-border-selected);
   border-color: var(--petit-color-border-selected);
+}
+.selection-mark {
+  position: absolute;
+  z-index: 4;
+  top: 8px;
+  right: 8px;
+  display: none;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border: 2px solid var(--petit-color-border-strong);
+  border-radius: var(--petit-radius-full);
+  background: var(--petit-color-primary);
+  color: var(--petit-color-on-primary);
+  font-size: 20px;
+  font-weight: var(--petit-font-weight-strong);
+  line-height: 1;
+}
+.recipe-card[aria-pressed='true'] .selection-mark {
+  display: grid;
 }
 .card-shell {
   display: block;
@@ -272,7 +286,7 @@ button:focus-visible {
 
 左侧徽记采用独立的 `../assets/s03/cook-emblem-mask.png`，不复用 `.fork`。已放大检查 S03：官方是粗圆三齿叉，叉柄接到外侧圆环右下方，奶油色形成负形，没有刀。素材由内置 image_gen 依据此局部生成，非官方源资产；没有将整块按钮截图贴入实现。来源与完整提示词保存在 [sources.json](../assets/s03/sources.json)。
 
-PNG 为 1254 × 1254px，实际透明内容边界 `(34,49)–(1221,1181)`。以 51px 方盒放在左侧 10px、顶部 12px，实际可见徽记约 48 × 46px。图形本身已包含倾斜角度，不再旋转整个圆盘。CSS mask 负责金色叉环；底下的奶油圆面填入负形，移除旧图标的额外外阴影。浅色金色由已有 primary 与 border-selected 混合，深色通过配方私有的主题比例采用 on-primary；不增加公共 token 或依赖。
+PNG 为 1254 × 1254px，实际透明内容边界 `(34,49)–(1221,1181)`。以 51px 方盒放在左侧 10px、顶部 12px，实际可见徽记约 48 × 46px。图形本身已包含倾斜角度，不再旋转整个圆盘。CSS mask 负责金色叉环；底下的奶油圆面填入负形，移除旧图标的额外外阴影。金色由已有 primary 与 border-selected 混合，不增加公共 token 或依赖。
 
 按钮仍为 296 × 76px，文字使用上一轮确认的 32px／800、顶部 22px，保留稀疏右侧纹样。截图与配方清理时曾遗漏字重覆盖，本轮恢复到该已确认值。Drink 的 `.fork` 和原资源保持不变。
 
@@ -300,7 +314,7 @@ PNG 为 1254 × 1254px，实际透明内容边界 `(34,49)–(1221,1181)`。以 
   isolation: isolate;
 }
 
-.cook:hover {
+.cook:enabled:hover {
   background: var(--petit-color-primary-hover);
 }
 
@@ -308,7 +322,7 @@ PNG 为 1254 × 1254px，实际透明内容边界 `(34,49)–(1221,1181)`。以 
   background: var(--petit-color-primary-hover);
 }
 
-.cook:active {
+.cook:enabled:active {
   background: var(--petit-color-primary-active);
 }
 
@@ -327,11 +341,7 @@ PNG 为 1254 × 1254px，实际透明内容边界 `(34,49)–(1221,1181)`。以 
   top: 12px;
   width: 51px;
   height: 51px;
-  color: color-mix(
-    in srgb,
-    var(--petit-color-on-primary) var(--recipe-dark-mix),
-    color-mix(in srgb, var(--petit-color-primary) 50%, var(--petit-color-border-selected))
-  );
+  color: color-mix(in srgb, var(--petit-color-primary) 50%, var(--petit-color-border-selected));
 }
 
 .cook-pattern {
@@ -582,11 +592,7 @@ PNG 为 1254 × 1254px，实际透明内容边界 `(34,49)–(1221,1181)`。以 
   top: -5px;
   width: 115px;
   height: 31px;
-  background: color-mix(
-    in srgb,
-    var(--petit-color-surface-hover) var(--recipe-dark-mix),
-    var(--petit-color-border)
-  );
+  background: var(--petit-color-border);
   border-radius: 50%;
 }
 .category .icon {
@@ -662,8 +668,8 @@ PNG 为 1254 × 1254px，实际透明内容边界 `(34,49)–(1221,1181)`。以 
 
 ## Tailwind、交互与边界
 
-Tailwind 4 导入 `tailwindcss` 和 `petit-ui/tailwind.css` 后，使用同名颜色角色，如 `text-petit-foreground-accent`、`bg-petit-surface-band`；厚框为 `border-petit-frame`／`border-petit-selected`，字重为 `font-petit-display`／`font-petit-strong`，字号为 `text-petit-heading`／`text-petit-label`／`text-petit-action`。共 39 项映射仍需组合消费方结构和几何，不会自动生成控件。
+Tailwind 4 导入 `tailwindcss` 和 `petit-ui/tailwind.css` 后，使用同名颜色角色，如 `text-petit-foreground-accent`、`bg-petit-surface-band`；厚框为 `border-petit-frame`／`border-petit-selected`，字重为 `font-petit-display`／`font-petit-strong`，字号为 `text-petit-heading`／`text-petit-label`／`text-petit-action`。共 40 项映射仍需组合消费方结构和几何，不会自动生成控件。
 
-选择卡点击更新 `aria-pressed`，原生按钮支持 Enter／空格；Cook 通过文字状态反馈结果；Details 展开时同步 `aria-expanded`，禁用使用原生 `disabled`。选中状态和高对比焦点相互独立。深色沿用原有扩展主题，只回归受影响的图标、强调字、素材和状态，不是官方深色复刻。
+选择卡点击更新 `aria-pressed`，原生按钮支持 Enter／空格；Cook 通过文字状态反馈结果；Details 展开时同步 `aria-expanded`，禁用使用原生 `disabled`。选中状态和高对比焦点相互独立。
 
-最终实现截图见[视觉基线](../assets/s03/baseline-light.png)。样式已整理为当前有效定义；主题差异使用 `--recipe-dark-mix` 的局部继承，避免深色祖先穿透局部浅色。已知差异仍包括示例媒体细节、替代图标／装饰、字形与手绘曲线；用户已认可这一版作为首版基线；后续扩展以此为起点。
+首版实现截图见[视觉基线](../assets/s03/baseline-light.png)，它保留勾号补充前的造型记录；当前配方与站点增加可见选择标记。样式已整理为当前有效定义。已知差异仍包括示例媒体细节、替代图标／装饰、字形与手绘曲线；用户已认可这一版作为首版基线；后续扩展以此为起点。

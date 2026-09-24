@@ -34,6 +34,7 @@
   --color-petit-surface-accent-strong: var(--petit-color-surface-accent-strong);
   --color-petit-surface-accent-soft: var(--petit-color-surface-accent-soft);
   --color-petit-surface-band: var(--petit-color-surface-band);
+  --color-petit-scrim: var(--petit-color-scrim);
 
   --border-width-petit-frame: var(--petit-border-width-frame);
   --border-width-petit-selected: var(--petit-border-width-selected);

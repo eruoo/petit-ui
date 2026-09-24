@@ -5,7 +5,7 @@ import CheckboxDemo from '../.vitepress/theme/components/CheckboxDemo.vue'
 
 # Checkbox · 准备食材
 
-厚奶油边框负责风格，深色功能边界负责辨认。勾选状态同时使用金黄填充与勾号，不只依靠颜色。
+厚奶油边框负责风格，褐色功能边界负责辨认。勾选状态同时使用金黄填充与勾号，不只依靠颜色。
 
 <DemoFrame label="准备清单"><CheckboxDemo /></DemoFrame>
 

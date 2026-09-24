@@ -11,7 +11,7 @@ import TabsDemo from '../.vitepress/theme/components/TabsDemo.vue'
 
 ## 试试键盘
 
-Tab 聚焦选项卡后，用左右方向键切换，Home / End 跳到首项或末项。激活的标签有 `aria-selected` 和一个可见圆点；茶杯卡片是独立原生按钮，用 `aria-pressed` 表达选择。
+Tab 聚焦选项卡后，用左右方向键切换，Home / End 跳到首项或末项。激活的标签有 `aria-selected` 和一个可见圆点；茶杯卡片是独立原生按钮，用 `aria-pressed` 表达选择，并在选中时显示勾选标记。
 
 Reka 的 `data-state="active"` 驱动背景样式。焦点轮廓仍独立保留，选择不会替代键盘焦点。
 

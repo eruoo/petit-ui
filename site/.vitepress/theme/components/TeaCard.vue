@@ -42,6 +42,7 @@ const symbols = [
         /></span>
         <span class="card-rank" aria-hidden="true"><RankIcon /><RankIcon /></span> </span
     ></span>
+    <span v-if="selected" class="selection-mark" aria-hidden="true">✓</span>
   </button>
 </template>
 
@@ -63,6 +64,23 @@ const symbols = [
 .recipe-card[aria-pressed='true'] {
   background: var(--petit-color-border-selected);
   border-color: var(--petit-color-border-selected);
+}
+.selection-mark {
+  position: absolute;
+  z-index: 4;
+  top: 8px;
+  right: 8px;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border: 2px solid var(--petit-color-border-strong);
+  border-radius: var(--petit-radius-full);
+  background: var(--petit-color-primary);
+  color: var(--petit-color-on-primary);
+  font-size: 20px;
+  font-weight: var(--petit-font-weight-strong);
+  line-height: 1;
 }
 .card-shell {
   display: block;

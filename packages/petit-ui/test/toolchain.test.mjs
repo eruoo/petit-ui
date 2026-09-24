@@ -42,6 +42,7 @@ const colorNames = [
   'surface-accent-strong',
   'surface-accent-soft',
   'surface-band',
+  'scrim',
 ]
 const radiusValues = { sm: '0.75rem', md: '1rem', lg: '1.5rem', full: '9999px' }
 
@@ -87,29 +88,30 @@ function assertProperty(rule, property, expected) {
   assert.deepEqual(values, [expected], `${rule.selector}: ${property}`)
 }
 
-test('plain CSS exposes complete zero-specificity themes and root-only geometry and type metrics', () => {
-  assert.equal(tokens.nodes.length, 3)
+test('plain CSS exposes only light colors and root-only geometry and type metrics', () => {
+  assert.equal(tokens.nodes.length, 2)
   assert.deepEqual(
     tokens.nodes.map(({ type }) => type),
-    ['rule', 'rule', 'rule'],
+    ['rule', 'rule'],
   )
   assert.deepEqual(
     tokens.nodes.map(({ selector }) => selector),
-    [":where(:root, [data-theme='light'])", ":where([data-theme='dark'])", ':where(:root)'],
+    [":where(:root, [data-theme='light'])", ':where(:root)'],
   )
   tokens.walkRules((rule) => {
     assert.ok(rule.nodes.every((node) => node.type === 'decl' && !node.important))
     assert.equal(new Set(rule.nodes.map(({ prop }) => prop)).size, rule.nodes.length)
   })
-  for (const rule of tokens.nodes.slice(0, 2)) {
-    assert.deepEqual(
-      Object.keys(declarations(rule)).sort(),
-      colorNames.map((name) => `--petit-color-${name}`).sort(),
-    )
-    for (const value of Object.values(declarations(rule))) assert.match(value, /^#[0-9a-f]{6}$/)
+  assert.deepEqual(
+    Object.keys(declarations(tokens.nodes[0])).sort(),
+    colorNames.map((name) => `--petit-color-${name}`).sort(),
+  )
+  for (const [name, value] of Object.entries(declarations(tokens.nodes[0]))) {
+    if (name === '--petit-color-scrim') assert.equal(value, 'rgb(37 42 40 / 65%)')
+    else assert.match(value, /^#[0-9a-f]{6}$/)
   }
   assert.deepEqual(
-    declarations(tokens.nodes[2]),
+    declarations(tokens.nodes[1]),
     Object.fromEntries([
       ...Object.entries(radiusValues).map(([name, value]) => [`--petit-radius-${name}`, value]),
       ...Object.entries(metricValues).map(([name, value]) => [`--petit-${name}`, value]),
@@ -127,7 +129,7 @@ test('adapter imports only tokens and maps every public variable inline', () => 
   assert.equal(theme.type, 'atrule')
   assert.equal(theme.name, 'theme')
   assert.equal(theme.params, 'inline')
-  assert.equal(theme.nodes.length, 39)
+  assert.equal(theme.nodes.length, 40)
   assert.ok(theme.nodes.every((node) => node.type === 'decl' && !node.important))
   assert.deepEqual(
     declarations(theme),
@@ -166,6 +168,7 @@ test('real Tailwind entry compiles utilities, state variants, opacity and defaul
     ],
     ['.bg-petit-surface-accent-soft', 'background-color', 'var(--petit-color-surface-accent-soft)'],
     ['.bg-petit-surface-band', 'background-color', 'var(--petit-color-surface-band)'],
+    ['.bg-petit-scrim', 'background-color', 'var(--petit-color-scrim)'],
     ['.bg-petit-surface-accent', 'background-color', 'var(--petit-color-surface-accent)'],
     ['.border-petit-border-selected', 'border-color', 'var(--petit-color-border-selected)'],
     ['.text-petit-link', 'color', 'var(--petit-color-link)'],
@@ -178,26 +181,33 @@ test('real Tailwind entry compiles utilities, state variants, opacity and defaul
   ])
     assertProperty(ruleFor(css, selector), property, value)
 
-  const opacity = ruleFor(css, '.bg-petit-primary\\/50')
-  const opacityValues = []
-  opacity.walkDecls('background-color', ({ value }) => opacityValues.push(value))
-  assert.deepEqual(opacityValues, [
-    'var(--petit-color-primary)',
-    'color-mix(in oklab, var(--petit-color-primary) 50%, transparent)',
-  ])
+  for (const token of ['primary', 'scrim']) {
+    const opacity = ruleFor(css, `.bg-petit-${token}\\/50`)
+    const opacityValues = []
+    opacity.walkDecls('background-color', ({ value }) => opacityValues.push(value))
+    assert.deepEqual(opacityValues, [
+      `var(--petit-color-${token})`,
+      `color-mix(in oklab, var(--petit-color-${token}) 50%, transparent)`,
+    ])
+  }
 
   for (const [variant, utility, property, token] of [
     ['hover', 'bg-petit-primary-hover', 'background-color', 'primary-hover'],
     ['active', 'bg-petit-primary-active', 'background-color', 'primary-active'],
     ['focus-visible', 'outline-petit-focus', 'outline-color', 'focus'],
     ['disabled', 'text-petit-foreground-disabled', 'color', 'foreground-disabled'],
+    ['disabled', 'bg-petit-surface-hover', 'background-color', 'surface-hover'],
   ]) {
     const rule = ruleFor(css, `.${variant}\\:${utility}:${variant}`)
     assertProperty(rule, property, `var(--petit-color-${token})`)
   }
-  const dark = ruleFor(css, '.dark\\:bg-red-500')
-  assert.equal(dark.parent.name, 'media')
-  assert.equal(dark.parent.params, '(prefers-color-scheme: dark)')
+  for (const state of ['hover', 'active']) {
+    assertProperty(
+      ruleFor(css, `.enabled\\:${state}\\:bg-petit-primary-${state}:enabled:${state}`),
+      'background-color',
+      `var(--petit-color-primary-${state})`,
+    )
+  }
   const defaultColors = []
   css.walkDecls('--color-red-500', ({ value }) => defaultColors.push(value))
   assert.equal(defaultColors.length, 1)
@@ -213,6 +223,7 @@ test('adapter alone includes default tokens without importing Tailwind or Prefli
 })
 
 function luminance(hex) {
+  assert.match(hex, /^#[0-9a-f]{6}$/, 'Contrast pairs must use opaque colors')
   const channels = hex
     .slice(1)
     .match(/../g)
@@ -223,7 +234,7 @@ function luminance(hex) {
   return channels[0] * 0.2126 + channels[1] * 0.7152 + channels[2] * 0.0722
 }
 
-test('actual light and dark declarations satisfy all specified default contrast pairs', () => {
+test('actual light declarations satisfy all specified default contrast pairs', () => {
   const surfaces = ['background', 'surface', 'surface-hover', 'surface-active']
   const pairs = []
   const add = (foregrounds, backgrounds, minimum) => {
@@ -242,25 +253,20 @@ test('actual light and dark declarations satisfy all specified default contrast 
     4.5,
   )
   add(['link', 'success', 'warning', 'error'], surfaces.slice(0, 2), 4.5)
+  add(['error'], ['surface-hover'], 4.5)
   add(['on-primary'], ['primary', 'primary-hover', 'primary-active'], 4.5)
   for (const status of ['success', 'warning', 'error']) add([`on-${status}`], [status], 4.5)
   add(['border-strong', 'focus'], [...surfaces, 'surface-accent'], 3)
   add(['border-selected'], ['background', 'surface'], 3)
   add(['foreground-accent'], ['background', 'surface'], 3)
-  assert.equal(pairs.length, 45)
-  for (const rule of tokens.nodes.slice(0, 2)) {
-    const values = declarations(rule)
-    const themePairs =
-      rule === tokens.nodes[0] ? [...pairs, ['border-selected', 'border', 3]] : pairs
-    for (const [foreground, background, minimum] of themePairs) {
-      const a = luminance(values[`--petit-color-${foreground}`])
-      const b = luminance(values[`--petit-color-${background}`])
-      const ratio = (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05)
-      assert.ok(
-        ratio >= minimum,
-        `${rule.selector}: ${foreground}/${background} = ${ratio} < ${minimum}`,
-      )
-    }
+  add(['border-selected'], ['border'], 3)
+  assert.equal(pairs.length, 47)
+  const values = declarations(tokens.nodes[0])
+  for (const [foreground, background, minimum] of pairs) {
+    const a = luminance(values[`--petit-color-${foreground}`])
+    const b = luminance(values[`--petit-color-${background}`])
+    const ratio = (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05)
+    assert.ok(ratio >= minimum, `${foreground}/${background} = ${ratio} < ${minimum}`)
   }
 })
 

@@ -7,7 +7,7 @@ import DialogDemo from '../.vitepress/theme/components/DialogDemo.vue'
 
 保留已确认的 Cook 胶囊轮廓、三齿叉与圆环连体徽记，让 Reka UI 处理模态对话框行为。
 
-<DemoFrame label="Cook 对话框" initial-theme="dark" v-slot="{ theme }"><DialogDemo :theme="theme" /></DemoFrame>
+<DemoFrame label="Cook 对话框"><DialogDemo /></DemoFrame>
 
 ## 焦点与关闭
 
@@ -17,13 +17,15 @@ import DialogDemo from '../.vitepress/theme/components/DialogDemo.vue'
 
 这是本地展示，不会发送请求或保存数据。
 
-## 局部主题跟随 Portal
+## 品牌覆盖跟随 Portal
 
-这个示例默认深色，即使文档是浅色也保持独立。切换上方局部主题再打开，对话框会跟随示例区域。Portal 内容显式重复同一主题，而不是依赖原始父节点的 CSS 继承。[嵌套主题与品牌示例](/guide/themes#局部与嵌套主题)还展示了品牌色的跨 Portal 传递。
+这个示例使用默认浅色配色。[品牌覆盖示例](/guide/themes#局部恢复默认配色)展示了局部颜色的跨 Portal 传递：触发区域、遮罩和内容分别应用同一品牌类。
+
+遮罩使用 `scrim`，内容面使用 `surface`。局部遮罩覆盖也要应用到 `DialogOverlay`；只给 `DialogContent` 加品牌类不会改变它的并列遮罩。
 
 ## 完整实现
 
-先安装 `reka-ui`、导入 tokens。将以下两个组件放在同一目录；茶杯与 mask 使用本站保存的独立示例素材，复制时调整资源路径。以 `<DialogDemo theme="dark" />` 使用。
+先安装 `reka-ui`、导入 tokens。将以下两个组件放在同一目录；茶杯与 mask 使用本站保存的独立示例素材，复制时调整资源路径。以 `<DialogDemo />` 使用。
 
 <<< @/.vitepress/theme/components/DialogDemo.vue
 
@@ -36,22 +38,16 @@ import DialogDemo from '../.vitepress/theme/components/DialogDemo.vue'
 
 </details>
 
-品牌类与主题辅助变量由消费方提供，本站定义如下：
+品牌类由消费方提供，本站定义如下：
 
 ```css
-:where(:root, [data-theme='light']) {
-  --recipe-dark-mix: 0%;
-}
-:where([data-theme='dark']) {
-  --recipe-dark-mix: 100%;
-}
-
 .demo-brand {
   --petit-color-primary: #654d79;
   --petit-color-primary-hover: #553d69;
   --petit-color-primary-active: #463058;
   --petit-color-on-primary: #ffffff;
   --petit-color-focus: #78538f;
+  --petit-color-scrim: rgb(37 42 40 / 45%);
 }
 ```
 

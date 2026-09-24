@@ -11,7 +11,7 @@ import {
 } from 'reka-ui'
 import CookButton from './CookButton.vue'
 import tea from '../../../../docs/assets/s03/tea.png'
-withDefaults(defineProps<{ theme: 'light' | 'dark'; branded?: boolean }>(), { branded: false })
+defineProps<{ branded?: boolean }>()
 
 function containSearchShortcut(event: KeyboardEvent) {
   const commandSearch = (event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k'
@@ -24,15 +24,14 @@ function containSearchShortcut(event: KeyboardEvent) {
 </script>
 
 <template>
-  <div :data-theme="theme" :class="{ 'demo-brand': branded }" class="dialog-demo">
+  <div :class="{ 'demo-brand': branded }" class="dialog-demo">
     <DialogRoot>
       <DialogTrigger as-child><CookButton /></DialogTrigger>
       <DialogPortal>
-        <DialogOverlay class="dialog-overlay" :data-theme="theme" />
-        <!-- Portal changes DOM ancestry. Repeat the local theme AND brand on the content. -->
+        <!-- Portal changes DOM ancestry. Repeat the brand on both siblings. -->
+        <DialogOverlay class="dialog-overlay" :class="{ 'demo-brand': branded }" />
         <DialogContent
           class="petit-dialog"
-          :data-theme="theme"
           :class="{ 'demo-brand': branded }"
           @keydown="containSearchShortcut"
         >
@@ -61,7 +60,7 @@ function containSearchShortcut(event: KeyboardEvent) {
   position: fixed;
   inset: 0;
   z-index: 100;
-  background: color-mix(in srgb, #252a28 65%, transparent);
+  background: var(--petit-color-scrim);
   animation: fade-in 160ms ease;
 }
 .petit-dialog {

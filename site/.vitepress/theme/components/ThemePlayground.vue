@@ -3,13 +3,13 @@ import DialogDemo from './DialogDemo.vue'
 </script>
 
 <template>
-  <div class="petit-demo theme-samples" data-theme="dark">
-    <p class="sample-label">深色作用域</p>
-    <div data-theme="light" class="theme-sample">
-      <p class="sample-label">嵌套浅色 · 品牌覆盖</p>
-      <DialogDemo theme="light" branded />
-      <div data-theme="dark" class="theme-sample inner-dark">
-        <p class="sample-label">再次嵌套深色 · 回到默认颜色</p>
+  <div class="petit-demo theme-samples">
+    <p class="sample-label">默认浅色配色</p>
+    <div class="theme-sample demo-brand">
+      <p class="sample-label">局部品牌覆盖</p>
+      <DialogDemo branded />
+      <div data-theme="light" class="theme-sample default-colors">
+        <p class="sample-label">恢复默认颜色</p>
         <span class="status-dot" aria-hidden="true" /> 胶囊仍继承祖先的圆角覆盖
       </div>
     </div>
@@ -27,7 +27,8 @@ import DialogDemo from './DialogDemo.vue'
 .theme-sample {
   margin-top: 18px;
   padding: 20px;
-  background: var(--petit-color-background);
+  background: var(--petit-color-surface);
+  border: 1px solid var(--petit-color-border-strong);
   color: var(--petit-color-foreground);
   border-radius: 16px;
 }
@@ -36,7 +37,7 @@ import DialogDemo from './DialogDemo.vue'
   font-size: 13px;
   font-weight: 800;
 }
-.inner-dark {
+.default-colors {
   font-size: 13px;
   line-height: 1.8;
 }
