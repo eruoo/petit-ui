@@ -17,6 +17,24 @@ CSS 导出从 `0.0.1` 开始提供。普通 CSS 用法无需安装 Tailwind；�
 
 若应用本来就在该仓库的 pnpm workspace 内，也可以使用 `"petit-ui": "workspace:*"`。本文档站使用这一方式，并且只通过公开子路径导入。
 
+## Agent skill
+
+使用 AI 编程助手时，可通过 [skills CLI](https://github.com/vercel-labs/skills) 安装仓库中的 `petit-ui` skill：
+
+```sh
+npx skills add eruoo/petit-ui --skill petit-ui
+```
+
+skill 提供普通 CSS、Tailwind CSS 4、语义 token、控件状态及主题覆盖指导，附带参考文件会一起安装。它不会安装 npm 包，应用仍需完成上面的依赖安装。安装时选择要使用的编程助手；如需安装到全局，添加 `-g`。
+
+在本仓库中验证尚未推送的 skill 时，使用本地路径：
+
+```sh
+npx skills add . --list
+```
+
+在目标应用目录运行 `npx skills add /absolute/path/to/petit-ui --skill petit-ui` 可安装本地版本。仓库远程安装使用已推送的内容。
+
 ## 普通 CSS
 
 在支持 npm 包解析的 CSS 打包器中，例如 Vite，导入：
