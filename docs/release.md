@@ -6,9 +6,9 @@
 
 `petit-ui@0.0.0-alpha` 已由维护者手动发布，用于建立 npm 包。这个版本尚未提供正式 token API，不能作为 token 功能完成的标志。已发布的版本号不能再次用于发布不同内容。
 
-当前待发布版本为 `0.0.1`，包含 CSS tokens 与 Tailwind CSS 4 适配入口，使用 MIT 许可证。该版本不带预发布后缀，发布时使用 `latest` dist-tag；版本文件更新不代表 registry 已有该版本。
+[`petit-ui@0.0.1`](https://www.npmjs.com/package/petit-ui/v/0.0.1) 已于 2026-09-24 发布到 npm，`latest` 指向该版本。它包含 CSS tokens 与 Tailwind CSS 4 适配入口，使用 MIT 许可证。
 
-仓库通过 GitHub Actions 的 `publish.yml` 使用 npm Trusted Publishing（OIDC）发布。需要先在 npm 配置与该工作流匹配的 Trusted Publisher；工作流合并、配置保存和 dry-run 都不代表已成功完成真实 OIDC 发布。正式 token 的内容与打包要求见 [token 第一版规范](specs/tokens-v1.md)。
+首次真实 OIDC 发布由 [`petit-ui@0.0.1` 标签](https://github.com/eruoo/petit-ui/tree/petit-ui%400.0.1)触发，[Publish 工作流](https://github.com/eruoo/petit-ui/actions/runs/36019359747)已成功。npm Trusted Publisher 与 `eruoo/petit-ui` 的 `publish.yml` 绑定；registry 安装、CSS 导出、Tailwind 编译和随包 LICENSE 均已验证。正式 token 的内容与打包要求见 [token 第一版规范](specs/tokens-v1.md)。
 
 功能版本发布前，应完成规范中的消费验收，并确认新版本号尚未被使用。更新版本、提交及合并、打发布标签和 npm 发布分别按当次授权执行；`release:bump` 不代替这些动作。
 
