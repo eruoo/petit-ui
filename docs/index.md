@@ -5,6 +5,7 @@
 用户文档从 [`site/index.md`](../site/index.md) 开始，包含安装、Token 浏览器、主题与 Reka UI 示例。本目录保留内部权威规范。
 
 - [项目架构](architecture.md)：工作区职责、token 包与 Tailwind 适配层的边界，以及文档站的消费边界。
+- [petit-ui skill](../skills/petit-ui/SKILL.md)：供编程助手消费本库的指导；通过 `npx skills` 安装的方法见[快速开始](../site/guide/getting-started.md#agent-skill)。
 - [Token 第一版规范](specs/tokens-v1.md)：实施依据，包含公共变量、主题默认值、导出入口、发布范围与验收标准。
 - [常见 UI 状态配方](../site/guide/states.md)：字段校验、破坏性操作、菜单、状态卡片与浮层的消费组合。
 - [表单校验](../site/examples/form.md)、[按钮与状态反馈](../site/examples/states.md)、[下拉菜单](../site/examples/menu.md)：状态配方的交互示例与完整源码。

@@ -4,12 +4,13 @@ petit-ui 提供可覆盖的 CSS design tokens，并提供 Tailwind CSS 4 适配�
 
 ## 工作区边界
 
-| 路径                     | 职责                                                      |
-| ------------------------ | --------------------------------------------------------- |
-| 根包 `petit-ui-monorepo` | 私有 pnpm workspace，维护公共检查、Git hooks 和版本工具。 |
-| `packages/petit-ui/`     | 可发布的 token 包，维护 CSS 源码、包说明及消费测试。      |
-| `docs/`                  | 项目规范、开发和发布说明。                                |
-| `site/`                  | 私有 VitePress 用户文档站，演示 tokens 与 Reka UI 组合。  |
+| 路径                     | 职责                                                                      |
+| ------------------------ | ------------------------------------------------------------------------- |
+| 根包 `petit-ui-monorepo` | 私有 pnpm workspace，维护公共检查、Git hooks 和版本工具。                 |
+| `packages/petit-ui/`     | 可发布的 token 包，维护 CSS 源码、包说明及消费测试。                      |
+| `docs/`                  | 项目规范、开发和发布说明。                                                |
+| `site/`                  | 私有 VitePress 用户文档站，演示 tokens 与 Reka UI 组合。                  |
+| `skills/petit-ui/`       | 可通过 skills CLI 独立安装的消费指导，附带状态与主题参考；不进入 npm 包。 |
 
 根包依赖 Oxlint、Oxfmt、commitlint、simple-git-hooks、bumpp 和 git-cliff。Tailwind CSS、Tailwind CLI、PostCSS 属于 token 子包的开发依赖。具体版本由各自的 `package.json` 和锁文件维护。
 

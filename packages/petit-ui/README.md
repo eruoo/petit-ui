@@ -6,6 +6,8 @@
 
 当前为 0.x 早期 API，公共名称和默认值仍可能在后续版本调整。CSS 导出从 `0.0.1` 开始提供；此前发布的 `0.0.0-alpha` 只有工程初始化内容，不包含这些入口。
 
+AI 编程助手可安装仓库中的 `petit-ui` skill，获得接入、状态配方和主题覆盖指导；安装方式见[快速开始的 Agent skill 说明](https://github.com/eruoo/petit-ui/blob/main/site/guide/getting-started.md#agent-skill)。
+
 ## 普通 CSS
 
 ```css
