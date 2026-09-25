@@ -63,14 +63,15 @@ PostCSS 在这里作为校验解析器使用，无需另建 `postcss.config`，�
 
 ## 文档站开发与验证
 
-`site/` 是私有 pnpm 子包，使用 VitePress 1.6.4、Vite 5、Vue 3.5 和 Tailwind 4；确切版本以 `site/package.json` 与锁文件为准。VitePress 自带 Vue 插件，不另行配置第二份。依赖安装需要 esbuild 和 vue-demi 的初始化脚本，许可在 workspace 的 `allowBuilds` 中显式声明。
+`site/` 是私有 pnpm 子包，使用 VitePress 1.6.4、Vite 5、Vue 3.5 和 Tailwind 4；确切版本以 `site/package.json` 与锁文件为准。VitePress 自带 Vue 插件，不另行配置第二份。依赖安装需要 esbuild、vue-demi 及 Wrangler 本地运行使用的 workerd 初始化脚本，许可在 workspace 的 `allowBuilds` 中显式声明。
 
 - `pnpm site:dev`：启动本地 VitePress 开发服务器。
 - `pnpm site:check`：用 vue-tsc 检查站点 Vue/TypeScript。
 - `pnpm site:build`：构建完整站点，验证 Markdown、代码引入和内部链接。
 - `pnpm site:preview`：预览 `site/.vitepress/dist/` 的静态产物。
+- `pnpm site:deploy`：完整检查通过后手动部署到 Cloudflare，作为 Git 自动部署的备用入口；配置与账号要求见[文档站部署](release.md#文档站部署)。
 
-站点产物与缓存已忽略。本站未配置部署；用户[安装指南](../site/guide/getting-started.md)使用 npm 已发布的包，站点开发继续通过 workspace 消费本地子包。实际发布状态见[版本与发布](release.md#当前发布状态)。
+站点产物、缓存与 Wrangler 本地状态已忽略。VitePress 使用域名根路径 `/`；Cloudflare 静态托管的配置与上线步骤见[文档站部署](release.md#文档站部署)。用户[安装指南](../site/guide/getting-started.md)使用 npm 已发布的包，站点开发继续通过 workspace 消费本地子包。包的实际发布状态见[版本与发布](release.md#当前发布状态)。
 
 Token 浏览器的数据加载器通过包公开导出定位 CSS，只读取规范中“颜色”“圆角”“共用边框与排版数值”定义章节的用途，避免后续对比度或配方表覆盖说明；新增或修改 token 后两者必须保持一致。字体自托管于站点，原始校验值在 `docs/assets/s03/sources.json`，许可证与字体一起保留。代码块直接引用运行中的组件，修改示例后无需维护另一份源码展示。
 

@@ -20,7 +20,7 @@ import DialogDemo from './DialogDemo.vue'
             >探索交互示例 <span aria-hidden="true">→</span></a
           >
         </div>
-        <p class="release-note">源码预览版 · CSS 功能尚未发布至 npm</p>
+        <p class="release-note">0.x 早期 API · CSS tokens 已发布至 npm</p>
       </div>
       <div class="hero-object petit-demo">
         <span class="object-index">01 / THE RECIPE COLLECTION</span>
