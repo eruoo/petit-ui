@@ -33,7 +33,7 @@ Tailwind CSS 4 使用方 → 适配映射 → 语义变量及主题默认值
 
 第一版复用现有 Node.js、Tailwind CLI 和 PostCSS 测试，浏览器消费验收保持临时。用户认可的视觉基线、独立示例素材及来源保存在 `docs/assets/s03/`，组合样式维护在 `docs/recipes/s03-controls.md`，供后续站点复用；这些资源不进入 token 包或公共组件 API。
 
-`site/` 已使用 VitePress 1.x 默认主题扩展、Vue 3.5 与 Reka UI 演示组合方式。这些依赖以及 Vite、Tailwind Vite 插件、TypeScript、vue-tsc 和站点解析用 PostCSS 都归私有子包 `petit-ui-site` 管理。站点以 `petit-ui: workspace:*` 依赖核心，仅通过公开 CSS 入口消费。Reka UI 的状态通过组件提供的属性交给样例样式处理，token 包不封装组件或注入全局组件样式。
+`site/` 已使用 VitePress 1.x 默认主题扩展、Vue 3.5 与 Reka UI 演示组合方式。这些依赖以及 Vite、Tailwind Vite 插件、TypeScript、vue-tsc、站点解析用 PostCSS 和 Cloudflare 部署用 Wrangler 都归私有子包 `petit-ui-site` 管理。站点以 `petit-ui: workspace:*` 依赖核心，仅通过公开 CSS 入口消费。Reka UI 的状态通过组件提供的属性交给样例样式处理，token 包不封装组件或注入全局组件样式。
 
 用户文档位于 `site/`，内部规范仍由 `docs/` 维护。Token 浏览器在构建时解析公开 CSS 入口，并从 `docs/specs/tokens-v1.md` 提取用途，不复制默认值。源码展示通过 VitePress snippets 引入实际 Vue 文件。站点复用 `docs/assets/s03/` 素材；Nunito 与许可放在站点，自托管字体不进入包。
 

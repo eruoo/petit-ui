@@ -16,6 +16,7 @@
     "site:dev": "pnpm --filter petit-ui-site dev",
     "site:build": "pnpm --filter petit-ui-site build",
     "site:preview": "pnpm --filter petit-ui-site preview",
+    "site:deploy": "pnpm check && pnpm --filter petit-ui-site run deploy",
     "site:check": "pnpm --filter petit-ui-site typecheck"
   },
   "devDependencies": {

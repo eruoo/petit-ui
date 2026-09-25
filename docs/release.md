@@ -59,7 +59,50 @@ npm trust list petit-ui
 npm trust github petit-ui --file publish.yml --repo eruoo/petit-ui --allow-publish
 ```
 
-仓库当前为私有仓库，可以使用 OIDC 认证，但 npm provenance 要求源码仓库公开。因此工作流在私有仓库关闭 provenance；将来仓库公开后会启用。不要为了获得 provenance 改变仓库可见性。具体支持条件和配置方式以 [npm Trusted Publishing 文档](https://docs.npmjs.com/trusted-publishers/)及 [npm trust 命令文档](https://docs.npmjs.com/cli/v11/commands/npm-trust/)为准。
+仓库现已公开。工作流根据仓库可见性设置 npm provenance：公开仓库启用，私有仓库关闭。下一次真实发布时，应核对 npm 上生成的 provenance；首次 OIDC 发布成功的记录不代表公开仓库的 provenance 已验证。具体支持条件和配置方式以 [npm Trusted Publishing 文档](https://docs.npmjs.com/trusted-publishers/)及 [npm trust 命令文档](https://docs.npmjs.com/cli/v11/commands/npm-trust/)为准。
+
+## 文档站部署
+
+文档站部署到 Cloudflare Workers Static Assets，配置由 `site/wrangler.jsonc` 维护。Wrangler 只上传 VitePress 生成的 `site/.vitepress/dist/`，没有 Worker 脚本、数据绑定或额外的服务端运行逻辑。Wrangler 作为开发依赖归私有子包 `petit-ui-site` 管理。
+
+VitePress 使用域名根路径 `/`。静态托管采用 `auto-trailing-slash` 处理 HTML 路径，支持现有的无 `.html` 内页链接；未知路径返回 VitePress 的 `404.html` 和 HTTP 404。
+
+文档站已于 2026-09-25 上线，地址为 [petit-ui-site.l709937065.workers.dev](https://petit-ui-site.l709937065.workers.dev)，尚未绑定自定义域名。
+
+日常发布使用 Cloudflare Workers Builds 的 Git 集成。`petit-ui-site` 已连接 `eruoo/petit-ui`，监听 `main` 的更新，检查和构建通过后自动部署。分支预览关闭，PR 继续运行现有的 GitHub CI。
+
+Cloudflare 控制台 **Settings → Builds → Production** 的配置如下：
+
+| 设置                        | 值                                                   |
+| --------------------------- | ---------------------------------------------------- |
+| Production branch           | `main`                                               |
+| Root directory              | `/`（仓库根目录）                                    |
+| Build command               | `pnpm -w install --frozen-lockfile && pnpm -w check` |
+| Deploy command              | `pnpm --filter petit-ui-site run deploy`             |
+| Build variable              | `SKIP_DEPENDENCY_INSTALL=1`                          |
+| Builds for Preview branches | 关闭                                                 |
+
+`SKIP_DEPENDENCY_INSTALL` 关闭平台默认的依赖安装，由构建命令执行冻结锁文件安装。Node.js 使用 Cloudflare 构建镜像的默认版本，pnpm 按根目录 `package.json` 的 `packageManager` 选择版本；当前没有额外设置 `NODE_VERSION` 或 `PNPM_VERSION`。首次自动构建及工具链变更后，检查日志中的实际版本符合[开发环境要求](development.md#安装与检查)。
+
+手动发布作为备用入口，从仓库根目录执行：
+
+```sh
+# 构建并验证 Cloudflare 配置，不上传。
+pnpm site:build
+pnpm --filter petit-ui-site exec wrangler deploy --dry-run
+
+# 检查当前 Cloudflare 登录身份及可访问的账号。
+pnpm --filter petit-ui-site exec wrangler whoami
+
+# 完整检查通过后，将生成的站点部署至 Cloudflare。
+pnpm site:deploy
+```
+
+手动部署前确认目标 Cloudflare 账号及 `petit-ui-site` 名称，缺少登录时使用 `pnpm --filter petit-ui-site exec wrangler login`。存在多个账号时，在本次部署进程中通过 `CLOUDFLARE_ACCOUNT_ID` 指定目标。认证凭据不写入仓库。
+
+部署后检查首页、内页直接访问、静态资源、本地搜索、交互示例和 404；若站点地址变更，同步更新此处、根目录 README 及 GitHub 仓库主页的文档入口。
+
+GitHub Actions 继续负责代码检查与 npm 发布，Cloudflare Workers Builds 负责文档站自动部署。文档站上线不发布 npm 包，也不创建版本标签。配置依据 [Workers Builds 文档](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/)、[构建环境说明](https://developers.cloudflare.com/workers/ci-cd/builds/build-image/)、[Static Assets 文档](https://developers.cloudflare.com/workers/static-assets/)和 [HTML 路径处理文档](https://developers.cloudflare.com/workers/static-assets/routing/advanced/html-handling/)。
 
 ## 发布一个新版本
 
