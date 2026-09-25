@@ -73,16 +73,18 @@ VitePress 使用域名根路径 `/`。静态托管采用 `auto-trailing-slash` �
 
 Cloudflare 控制台 **Settings → Builds → Production** 的配置如下：
 
-| 设置                        | 值                                                   |
-| --------------------------- | ---------------------------------------------------- |
-| Production branch           | `main`                                               |
-| Root directory              | `/`（仓库根目录）                                    |
-| Build command               | `pnpm -w install --frozen-lockfile && pnpm -w check` |
-| Deploy command              | `pnpm --filter petit-ui-site run deploy`             |
-| Build variable              | `SKIP_DEPENDENCY_INSTALL=1`                          |
-| Builds for Preview branches | 关闭                                                 |
+| 设置                        | 值                                             |
+| --------------------------- | ---------------------------------------------- |
+| Production branch           | `main`                                         |
+| Root directory              | `/`（仓库根目录）                              |
+| Build command               | `pnpm install --frozen-lockfile && pnpm check` |
+| Deploy command              | `pnpm --filter petit-ui-site run deploy`       |
+| Build variable              | `SKIP_DEPENDENCY_INSTALL=1`                    |
+| Builds for Preview branches | 关闭                                           |
 
-`SKIP_DEPENDENCY_INSTALL` 关闭平台默认的依赖安装，由构建命令执行冻结锁文件安装。Node.js 使用 Cloudflare 构建镜像的默认版本，pnpm 按根目录 `package.json` 的 `packageManager` 选择版本；当前没有额外设置 `NODE_VERSION` 或 `PNPM_VERSION`。首次自动构建及工具链变更后，检查日志中的实际版本符合[开发环境要求](development.md#安装与检查)。
+`SKIP_DEPENDENCY_INSTALL` 关闭平台默认的依赖安装，由构建命令执行冻结锁文件安装。安装命令不要添加 `-w`（`--workspace-root`）：它会只安装根包依赖，导致测试和站点子包缺少依赖；默认的 `pnpm install` 会安装整个工作区。
+
+Node.js 使用 Cloudflare 构建镜像的默认版本，pnpm 按根目录 `package.json` 的 `packageManager` 选择版本；当前没有额外设置 `NODE_VERSION` 或 `PNPM_VERSION`。首次自动构建及工具链变更后，检查日志中的实际版本符合[开发环境要求](development.md#安装与检查)。
 
 手动发布作为备用入口，从仓库根目录执行：
 
