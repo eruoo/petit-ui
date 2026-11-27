@@ -51,7 +51,7 @@ body {
 
 <ThemePlayground />
 
-品牌区域的 Cook 使用紫色主操作，打开后得到相同品牌的 Dialog。内部带 `data-theme="light"` 的区域恢复默认金黄，胶囊仍继承祖先的圆角覆盖。若需要在该区域再次使用品牌配色，可重新应用品牌类。
+两个 Cook 按钮共享祖先覆盖的 20px 圆角。品牌按钮及其 Dialog 使用紫色主色，带 `data-theme="light"` 的区域及其 Dialog 使用默认金黄。若需要在该区域再次使用品牌配色，可重新应用品牌类。
 
 ## Portal / Teleport
 

@@ -163,7 +163,7 @@ S03 保存图为 1778 × 1000。研究采用左上角为原点的 5 × 5 像素 
   --petit-color-primary-hover: #6d28d9;
   --petit-color-primary-active: #5b21b6;
   --petit-color-on-primary: #ffffff;
-  --petit-color-focus: #7c3aed;
+  --petit-color-focus: #78538f;
   --petit-radius-md: 1rem;
 }
 ```

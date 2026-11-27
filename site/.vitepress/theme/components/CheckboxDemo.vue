@@ -67,7 +67,7 @@ const id = useId()
   font-size: 14px;
   line-height: 1.7;
   color: var(--petit-color-foreground-muted);
-  margin: 18px 0 0;
+  margin: 16px 0 0;
 }
 .checkbox:focus-visible {
   outline: 3px solid var(--petit-color-focus);

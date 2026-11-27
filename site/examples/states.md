@@ -10,7 +10,7 @@ import StatusFeedbackDemo from '../.vitepress/theme/components/examples/StatusFe
 
 ## 按钮状态
 
-悬停或按住按钮查看背景变化，Tab 查看焦点外圈。水果茶的勾号、选择边和 `aria-pressed` 同步变化，焦点仍有独立外圈。「移除选择」会取消选择并禁用自身，再选中水果茶即可恢复。禁用按钮不会响应点击或改变悬停背景。
+悬停或按住按钮查看背景变化，Tab 查看焦点外圈。水果茶的勾号、选择边和 `aria-pressed` 同步变化，焦点仍有独立外圈。「移除选择」会取消选择并禁用自身，焦点回到「水果茶」，此时可按空格重新选中。禁用按钮不会响应点击或改变悬停背景。
 
 <DemoFrame label="主操作、选择与禁用"><ButtonStatesDemo /></DemoFrame>
 

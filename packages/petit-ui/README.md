@@ -95,7 +95,7 @@ AI 编程助手可安装仓库中的 `petit-ui` skill，获得接入、状态配
   --petit-color-primary-hover: #6d28d9;
   --petit-color-primary-active: #5b21b6;
   --petit-color-on-primary: #ffffff;
-  --petit-color-focus: #7c3aed;
+  --petit-color-focus: #78538f;
   --petit-radius-md: 1rem;
 }
 ```

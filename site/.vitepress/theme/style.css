@@ -32,7 +32,7 @@
   --vp-c-gutter: var(--vp-c-divider);
   --vp-c-border: var(--petit-color-border-strong);
   --vp-code-bg: var(--petit-color-surface-hover);
-  --vp-code-block-bg: var(--petit-color-surface-hover);
+  --vp-code-block-bg: var(--petit-color-surface);
   --vp-code-color: var(--petit-color-foreground-heading);
   --vp-button-brand-bg: var(--petit-color-primary);
   --vp-button-brand-text: var(--petit-color-on-primary);
@@ -62,6 +62,15 @@
 }
 .vp-doc a {
   text-underline-offset: 4px;
+}
+.vp-doc table {
+  /* Striped rows use a darker surface than the default link color supports. */
+  --vp-c-brand-1: color-mix(
+    in srgb,
+    var(--petit-color-link) 80%,
+    var(--petit-color-foreground-heading)
+  );
+  --vp-code-link-color: var(--vp-c-brand-1);
 }
 .vp-doc :where(button, input, select):focus-visible,
 .petit-demo :where(button, a, input, select):focus-visible,

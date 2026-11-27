@@ -91,7 +91,7 @@ function containSearchShortcut(event: KeyboardEvent) {
   display: inline-flex;
   align-items: center;
   gap: 16px;
-  padding: 8px 10px 8px 24px;
+  padding: 8px 12px 8px 24px;
   border: 0;
   border-radius: var(--petit-radius-full);
   background: var(--petit-color-foreground-heading);
@@ -158,7 +158,7 @@ function containSearchShortcut(event: KeyboardEvent) {
 }
 .menu-item {
   margin: 4px 0;
-  padding: 10px 12px;
+  padding: 12px;
   border-radius: var(--petit-radius-sm);
   background: var(--petit-color-surface);
   color: var(--petit-color-foreground);

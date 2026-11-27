@@ -13,6 +13,7 @@ defineProps<{ disabled?: boolean }>()
 <style scoped>
 .cook {
   width: 296px;
+  max-width: 100%;
   height: 76px;
   border: 0;
   padding: 0;
@@ -21,6 +22,7 @@ defineProps<{ disabled?: boolean }>()
   border-radius: var(--petit-radius-full);
   background: var(--petit-color-primary);
   color: var(--petit-color-on-primary);
+  cursor: pointer;
   font:
     var(--petit-font-weight-strong) var(--petit-font-size-action)/1 Nunito,
     sans-serif;
@@ -37,8 +39,7 @@ defineProps<{ disabled?: boolean }>()
 
 .cook-label {
   position: absolute;
-  left: 92px;
-  right: 54px;
+  inset-inline: max(72px, 31%) 18%;
   top: 22px;
   white-space: nowrap;
   z-index: 2;
@@ -107,10 +108,6 @@ defineProps<{ disabled?: boolean }>()
   mask: url('../../../../docs/assets/s03/cook-emblem-mask.png') center / contain no-repeat;
 }
 
-.cook {
-  max-width: 100%;
-  cursor: pointer;
-}
 .cook:focus-visible {
   outline: 3px solid var(--petit-color-focus);
   outline-offset: 5px;
