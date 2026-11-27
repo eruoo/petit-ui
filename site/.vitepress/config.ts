@@ -8,6 +8,9 @@ export default defineConfig({
   appearance: false,
   cleanUrls: true,
   head: [['link', { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }]],
+  markdown: {
+    theme: 'github-light-high-contrast',
+  },
   vite: {
     plugins: [tailwindcss()],
     build: {
@@ -74,6 +77,6 @@ export default defineConfig({
     sidebarMenuLabel: '文档目录',
     returnToTopLabel: '返回顶部',
     socialLinks: [{ icon: 'github', link: 'https://github.com/eruoo/petit-ui' }],
-    footer: { message: 'CSS tokens，留给你自由组合。', copyright: 'Petit UI · 独立的界面风格探索' },
+    footer: { copyright: 'Petit UI · 独立的界面风格探索' },
   },
 })

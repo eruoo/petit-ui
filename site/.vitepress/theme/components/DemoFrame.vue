@@ -17,7 +17,7 @@ defineProps<{ label: string }>()
   overflow: hidden;
 }
 .toolbar {
-  padding: 12px 18px;
+  padding: 12px 16px;
   font-size: 13px;
   font-weight: 800;
   background: var(--vp-c-bg-soft);

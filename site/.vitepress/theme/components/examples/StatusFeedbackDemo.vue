@@ -150,7 +150,7 @@ const id = useId()
   font-size: 20px;
 }
 .description {
-  margin: 6px 0 0;
+  margin: 8px 0 0;
   font-size: 14px;
 }
 .filled {

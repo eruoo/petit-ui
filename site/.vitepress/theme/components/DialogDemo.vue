@@ -95,7 +95,7 @@ function containSearchShortcut(event: KeyboardEvent) {
   line-height: 1.2;
 }
 .dialog-description {
-  margin: 18px 0 24px;
+  margin: 16px 0 24px;
   font-size: 15px;
   line-height: 1.8;
 }
@@ -103,7 +103,7 @@ function containSearchShortcut(event: KeyboardEvent) {
   display: block;
   width: 100%;
   border-radius: var(--petit-radius-full);
-  padding: 14px;
+  padding: 16px;
   background: var(--petit-color-primary);
   color: var(--petit-color-on-primary);
   font-weight: 800;
@@ -117,7 +117,7 @@ function containSearchShortcut(event: KeyboardEvent) {
 }
 .dialog-cancel {
   margin-top: 12px;
-  padding: 10px;
+  padding: 12px;
   text-decoration: underline;
   text-underline-offset: 4px;
   cursor: pointer;

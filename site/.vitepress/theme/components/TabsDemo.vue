@@ -12,18 +12,15 @@ import TeaCard from './TeaCard.vue'
     <TabsContent value="tea" class="tab-panel">
       <TeaCard />
       <div class="description">
-        <p class="eyebrow">THE LITTLE RECIPE BOOK</p>
         <h3 class="title">Aromatic<br />Fruit Tea</h3>
-        <p class="copy">一杯果香，一段闲暇。<br />点按卡片，试试选择状态。</p>
+        <p class="copy">点按卡片，切换选择状态。</p>
         <span class="tag">Drink · Strength +30</span>
       </div>
     </TabsContent>
     <TabsContent value="recipe" class="tab-panel recipe-copy">
       <div>
-        <p class="eyebrow">A MOMENT TO MAKE</p>
-        <h3 class="title">把日常，煮得暖一点。</h3>
+        <h3 class="title">水果茶配方</h3>
         <p class="copy">水果切片，加入茶叶与热水。<br />静候三分钟，即可享用。</p>
-        <p class="tag">示例配方 · 交互由 Reka UI 提供</p>
       </div>
     </TabsContent>
   </TabsRoot>
@@ -36,14 +33,14 @@ import TeaCard from './TeaCard.vue'
 .tabs-list {
   display: flex;
   gap: 8px;
-  padding: 6px;
+  padding: 8px;
   width: fit-content;
   border-radius: var(--petit-radius-full);
   background: var(--petit-color-surface);
   border: 1px solid var(--petit-color-border-strong);
 }
 .tab {
-  padding: 10px 18px;
+  padding: 8px 16px;
   border-radius: var(--petit-radius-full);
   color: var(--petit-color-foreground);
   font-weight: 800;
@@ -59,7 +56,7 @@ import TeaCard from './TeaCard.vue'
 .tab-panel {
   display: flex;
   align-items: center;
-  gap: 30px;
+  gap: 28px;
   margin-top: 28px;
   min-height: 235px;
 }
@@ -67,23 +64,17 @@ import TeaCard from './TeaCard.vue'
   display: none;
 }
 .title {
-  margin: 10px 0 14px;
+  margin: 0 0 16px;
   font-size: var(--petit-font-size-heading);
   font-weight: var(--petit-font-weight-display);
   line-height: 1.15;
   color: var(--petit-color-foreground-heading);
   border: 0;
 }
-.eyebrow {
-  font-size: 10px;
-  letter-spacing: 1.8px;
-  margin: 0;
-  font-weight: 800;
-}
 .copy {
   font-size: 15px;
   line-height: 1.8;
-  margin: 0 0 18px;
+  margin: 0 0 16px;
 }
 .tag {
   font-size: 13px;
@@ -96,7 +87,7 @@ import TeaCard from './TeaCard.vue'
   .tab-panel {
     flex-direction: column;
     align-items: flex-start;
-    gap: 22px;
+    gap: 24px;
   }
   .description {
     padding: 0 8px;

@@ -122,7 +122,7 @@ function reset() {
 .field,
 .action {
   min-width: 0;
-  padding: 10px 14px;
+  padding: 12px 16px;
   border: 2px solid var(--petit-color-border-strong);
   border-radius: var(--petit-radius-sm);
   background: var(--petit-color-surface);

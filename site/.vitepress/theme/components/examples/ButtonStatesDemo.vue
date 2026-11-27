@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { shallowRef } from 'vue'
+import { shallowRef, useTemplateRef } from 'vue'
 
 const selected = shallowRef(true)
 const result = shallowRef('水果茶已选中，可以用 Tab 查看焦点外圈。')
+const choiceButton = useTemplateRef<HTMLButtonElement>('choiceButton')
 
 function toggleSelection() {
   selected.value = !selected.value
@@ -12,6 +13,7 @@ function toggleSelection() {
 function removeSelection() {
   selected.value = false
   result.value = '已移除选择。再次选择水果茶，就可以继续操作。'
+  choiceButton.value?.focus()
 }
 </script>
 
@@ -24,7 +26,13 @@ function removeSelection() {
       <button class="action primary" type="button" disabled>暂不可用</button>
     </div>
     <div class="actions choices">
-      <button class="action choice" type="button" :aria-pressed="selected" @click="toggleSelection">
+      <button
+        ref="choiceButton"
+        class="action choice"
+        type="button"
+        :aria-pressed="selected"
+        @click="toggleSelection"
+      >
         <span class="check" aria-hidden="true">✓</span> 水果茶
       </button>
       <button class="action danger" type="button" :disabled="!selected" @click="removeSelection">
@@ -59,7 +67,7 @@ function removeSelection() {
 }
 .action {
   box-sizing: border-box;
-  padding: 10px 24px;
+  padding: 12px 24px;
   border: 2px solid var(--petit-color-border-strong);
   border-radius: var(--petit-radius-full);
   background: var(--petit-color-surface);

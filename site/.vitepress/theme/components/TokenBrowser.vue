@@ -22,30 +22,32 @@ const rows = computed(() =>
     <p class="count" role="status">
       {{ rows.length }} / {{ data.length }} 个 tokens · 默认值来自当前 CSS
     </p>
-    <div class="table-scroll" tabindex="0" role="region" aria-label="Token 默认值表，可横向滚动">
-      <table>
-        <thead>
-          <tr>
-            <th>CSS 变量 / 用途</th>
-            <th>默认值</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="row in rows" :key="row.name">
-            <td>
-              <code>{{ row.name }}</code>
-              <p class="usage">{{ row.usage }}</p>
-            </td>
-            <td>
-              <span v-if="row.color" class="swatch" :style="{ background: row.value }" /><code>{{
-                row.value
-              }}</code>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <p v-if="!rows.length">没有匹配的 token，试试更短的关键词。</p>
+    <table v-if="rows.length" aria-label="Token 默认值">
+      <thead>
+        <tr>
+          <th scope="col">CSS 变量 / 用途</th>
+          <th scope="col">默认值</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="row in rows" :key="row.name">
+          <td>
+            <code>{{ row.name }}</code>
+            <p class="usage">{{ row.usage }}</p>
+          </td>
+          <td>
+            <span
+              v-if="row.color"
+              class="swatch"
+              :style="{ background: row.value }"
+              aria-hidden="true"
+            />
+            <code>{{ row.value }}</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p v-else>没有匹配的 token，试试更短的关键词。</p>
   </div>
 </template>
 
@@ -65,28 +67,24 @@ const rows = computed(() =>
 }
 .count {
   font-size: 13px;
+  font-variant-numeric: tabular-nums;
   color: var(--petit-color-foreground-muted);
 }
-.table-scroll {
-  overflow-x: auto;
-}
-.table-scroll table {
+.token-browser table {
   display: table;
+  table-layout: fixed;
   width: 100%;
   margin: 0;
 }
-.table-scroll td {
+.token-browser th:last-child {
+  width: 28%;
+}
+.token-browser td {
   vertical-align: top;
 }
-.table-scroll td:first-child {
-  min-width: 300px;
-}
-.table-scroll td:not(:first-child) {
-  min-width: 108px;
-}
-.table-scroll code {
+.token-browser code {
   font-size: 12px;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
   padding: 0;
   background: transparent;
 }
@@ -101,6 +99,14 @@ const rows = computed(() =>
   height: 26px;
   border-radius: 7px;
   border: 1px solid var(--vp-c-divider);
-  margin: 3px 0 9px;
+  margin-bottom: 8px;
+}
+@media (max-width: 480px) {
+  .token-browser th:last-child {
+    width: 36%;
+  }
+  .token-browser :is(th, td) {
+    padding-inline: 8px;
+  }
 }
 </style>
